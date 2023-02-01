@@ -1,9 +1,9 @@
 //Edgar Robitaille
-//erobita1 
+//erobita1
 #include <stdio.h>
 
 int main(void)
 {
-    printf("The first prize goes to Jennifer.");
-    return 0;
+  printf("The first prize goes to Jennifer.\n");
+  return 0;
 }
