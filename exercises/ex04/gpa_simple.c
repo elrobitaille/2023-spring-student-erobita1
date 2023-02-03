@@ -53,12 +53,77 @@ otherwise
 
 
 #include <stdio.h>
-
 int main() {
+    int point_sum, points, numInputs = 0;
+    float credit_sum, gpa, credits  = 0;
+    int count = 0;
+    char grade = 0;
 
-  //TO DO: add your code here so that your program
-  //produces output that would be identical to the
-  //given sample run when provided the same input
+    printf("Welcome to GPA calculator!\n");
+    printf("Enter grade and credits for each course below (ctrl-d to end):\n");
+    printf("course %d: ", ++count);
 
- return 0;
+    while (numInputs = scanf(" %c %f", &grade, &credits) != EOF) {
+        if (numInputs != 2) {
+            printf("Error with input\n");
+        }
+        else {
+            switch (grade) {
+                case 'A':
+                case 'a':
+                    points = 4.0;
+                    break;
+                case 'B':
+                case 'b':
+                    points = 3.0;
+                    break;
+                case 'C':
+                case 'c':
+                    points = 2.0;
+                    break;
+                case 'D':
+                case 'd':
+                    points = 1.0;
+                    break;
+                case 'F':
+                case 'f':
+                    points = 0.0;
+                    break;
+                default:
+                    points = 0.0;
+                    credits = 0.0;
+                    break;
+            }
+        }
+
+
+        if (credits < 0.0 || grade == ' ') {
+            break;
+        }
+
+        credit_sum += credits;
+        point_sum += points * credits;
+
+        count += 1;
+        printf("course %d: ", count);
+    }
+
+    if (credit_sum > 0)  {
+        gpa = point_sum / credit_sum;
+        printf("GPA is %.2f\n", gpa);
+    }
+
+    if (gpa >= 3.5) {
+        printf("Dean's List");
+    }
+    else if (gpa <= 2.0) {
+        printf("Uh-oh, Academic Probation...");
+    }
+    else {
+        printf("No credits attempted; no GPA to report");
+    }
+
+    printf("\nCredits: %f %f", credit_sum, point_sum);
+    return 0;
+
 }
