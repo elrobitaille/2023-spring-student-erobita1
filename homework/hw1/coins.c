@@ -4,8 +4,9 @@
 
 int main()
 {
-    int MAX_DENOMINATIONS, coinValue = 0;
-    char coinLetter = '\0';
+    int MAX_DENOMINATIONS, coinValue, addAmount = 0;
+    char coinLetter, firstCommand, secondCommand = '\0';
+
 
     printf("How many denominations? ");
     scanf("%d", &MAX_DENOMINATIONS);
@@ -20,7 +21,19 @@ int main()
         values[i] = coinValue;
     }
 
-    printf("%d\n", identifiers[0]);
+    while (scanf("%c", &firstCommand) <= 3) {
+        printf("Enter a command: ");
+        
+        if (firstCommand == 's') {
+            break;
+        }
+        if (firstCommand == 'a' || firstCommand == 'r') {
+            scanf("%c%d", &secondCommand, &addAmount);
+            break; 
+        }
+
+    }
+    
     
     return 0;
 }
