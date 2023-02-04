@@ -4,9 +4,8 @@
 
 int main()
 {
-    int MAX_DENOMINATIONS, coinValue, addAmount = 0;
+    int MAX_DENOMINATIONS, coinValue, addAmount, loopCheck = 0;
     char coinLetter, firstCommand, secondCommand = '\0';
-
 
     printf("How many denominations? ");
     scanf("%d", &MAX_DENOMINATIONS);
@@ -22,18 +21,30 @@ int main()
     }
 
     while (scanf("%c", &firstCommand) <= 3) {
-        printf("Enter a command: ");
-        
-        if (firstCommand == 's') {
+        if (!loopCheck) {
+            printf("Enter a command: ");
+        }
+        loopCheck = 1; // Makes it so that "Enter a command: " does not print too many times.
+
+        if (scanf("%c", &firstCommand) == 1 && firstCommand == 's') {
+            printf("Identifier,Face Value,Count,Total Value\n");
             break;
         }
-        if (firstCommand == 'a' || firstCommand == 'r') {
-            scanf("%c%d", &secondCommand, &addAmount);
+        else if (firstCommand == 'a' || firstCommand == 'r' && scanf("%c", &firstCommand) == 3) {
+            printf("Im working!");
+            break; 
+        }
+        else if (scanf("%c", &firstCommand) == 1 || firstCommand == 'q') {
+            printf("Bye!\n");
+            break; 
+        }
+        else {
+            printf("Error");
             break; 
         }
 
     }
-    
-    
+
+
     return 0;
 }
