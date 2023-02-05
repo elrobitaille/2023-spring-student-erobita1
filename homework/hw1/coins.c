@@ -11,14 +11,17 @@ int main()
     printf("How many denominations? ");
     scanf("%d", &MAX_DENOMINATIONS);
 
-    char identifiers[MAX_DENOMINATIONS];;
+
+    char identifiers[MAX_DENOMINATIONS];
     int values[MAX_DENOMINATIONS];
+    int coinMultiplier[MAX_DENOMINATIONS];
 
     for (int i = 0; i < MAX_DENOMINATIONS; i++) {
         printf("Enter coin identifier and value in cents: ");
         scanf(" %c %d", &coinLetter, &coinValue); 
         identifiers[i] = coinLetter;
         values[i] = coinValue;
+        coinMultiplier[i] = 0;
     }
 
     while (dummyVariable) {
@@ -32,8 +35,14 @@ int main()
         if (userInput == 1) {
             if (firstCommand == 's') {
                 printf("Identifier,Face Value,Count,Total Value\n");
+
+                for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
+                    printf(" %c,%d,%d,%d\n", identifiers[i], values[i], coinMultiplier[i], values[i] * coinMultiplier[i]);
+                }
+
                 dummyVariable = 0;
-                break;
+                loopCheck = 0;
+                continue;
             } 
             else if (firstCommand == 'q') {
                 printf("Bye!\n");
@@ -42,6 +51,17 @@ int main()
             }
             if (firstCommand == 'a' || firstCommand == 'r') {
                 int newInput = scanf(" %c %d", &secondCommand, &valueAmount);
+
+                for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
+                    if (identifiers[i] == secondCommand || firstCommand == 'a') {
+                        coinMultiplier[i] += valueAmount;
+                    }
+                    else if (identifiers[i] == secondCommand || firstCommand == 'r') {
+                        coinMultiplier[i] -= valueAmount;
+                    }
+
+                }
+
                 if (newInput != 2) {
                     printf("Invalid Input\n");
                     break;
@@ -56,6 +76,7 @@ int main()
             break;
         }
     }
+
 
     return 0;
 }
