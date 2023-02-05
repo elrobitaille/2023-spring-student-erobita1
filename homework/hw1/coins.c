@@ -4,7 +4,8 @@
 
 int main()
 {
-    int MAX_DENOMINATIONS, coinValue, addAmount, loopCheck = 0;
+    int MAX_DENOMINATIONS, coinValue, valueAmount, loopCheck = 0;
+    int dummyVariable = 1;
     char coinLetter, firstCommand, secondCommand = '\0';
 
     printf("How many denominations? ");
@@ -20,31 +21,41 @@ int main()
         values[i] = coinValue;
     }
 
-    while (scanf("%c", &firstCommand) <= 3) {
+    while (dummyVariable) {
         if (!loopCheck) {
             printf("Enter a command: ");
         }
         loopCheck = 1; // Makes it so that "Enter a command: " does not print too many times.
 
-        if (scanf("%c", &firstCommand) == 1 && firstCommand == 's') {
-            printf("Identifier,Face Value,Count,Total Value\n");
-            break;
-        }
-        else if (firstCommand == 'a' || firstCommand == 'r' && scanf("%c", &firstCommand) == 3) {
-            printf("Im working!");
-            break; 
-        }
-        else if (scanf("%c", &firstCommand) == 1 || firstCommand == 'q') {
-            printf("Bye!\n");
-            break; 
+        int userInput = scanf(" %c", &firstCommand);
+
+        if (userInput == 1) {
+            if (firstCommand == 's') {
+                printf("Identifier,Face Value,Count,Total Value\n");
+                dummyVariable = 0;
+                break;
+            } 
+            else if (firstCommand == 'q') {
+                printf("Bye!\n");
+                dummyVariable = 0;
+                break;
+            }
+            if (firstCommand == 'a' || firstCommand == 'r') {
+                int newInput = scanf(" %c %d", &secondCommand, &valueAmount);
+                if (newInput != 2) {
+                    printf("Invalid Input\n");
+                    break;
+                }
+                loopCheck = 0;
+                continue;
+            }
         }
         else {
-            printf("Error");
-            break; 
+            printf("Invalid Input\n");
+            dummyVariable = 0;
+            break;
         }
-
     }
-
 
     return 0;
 }
