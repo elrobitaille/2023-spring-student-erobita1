@@ -4,19 +4,22 @@
 
 int main()
 {
-    int MAX_DENOMINATIONS, coinValue, valueAmount, loopCheck = 0;
+    int MAX_DENOMINATIONS, coinValue, valueAmount, centValue, loopCheck, multValue = 0;
     int dummyVariable = 1;
+    double totalValue = 0.0; 
     char coinLetter, firstCommand, secondCommand = '\0';
 
+    /* Gathers information on how many "denominations" or coins there are. */
     printf("How many denominations? ");
     scanf("%d", &MAX_DENOMINATIONS);
 
-
+    /* Setting array size to be the maximum denominations. */
     char identifiers[MAX_DENOMINATIONS];
     int values[MAX_DENOMINATIONS];
     int coinMultiplier[MAX_DENOMINATIONS];
 
     for (int i = 0; i < MAX_DENOMINATIONS; i++) {
+        /* Initializes all of the arrays and gathers the currency and their values. */
         printf("Enter coin identifier and value in cents: ");
         scanf(" %c %d", &coinLetter, &coinValue); 
         identifiers[i] = coinLetter;
@@ -37,7 +40,9 @@ int main()
                 printf("Identifier,Face Value,Count,Total Value\n");
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
-                    printf(" %c,%d,%d,%d\n", identifiers[i], values[i], coinMultiplier[i], values[i] * coinMultiplier[i]);
+                    multValue = values[i] * coinMultiplier[i];
+                    printf("%c,%d,%d,%d\n", identifiers[i], values[i], coinMultiplier[i], multValue); 
+                    totalValue += (double) multValue / 100.0;
                 }
 
                 dummyVariable = 0;
@@ -82,7 +87,7 @@ int main()
             break;
         }
     }
-
+    printf("Overall value of collection: $%.2lf\n", totalValue);
 
     return 0;
 }
