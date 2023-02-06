@@ -1,6 +1,9 @@
 //8BF0CD
 
 #include <stdio.h>
+#include <math.h>
+#include <assert.h>
+#include <string.h>
 
 int main()
 {
@@ -11,7 +14,12 @@ int main()
 
     /* Gathers information on how many "denominations" or coins there are. */
     printf("How many denominations? ");
-    scanf("%d", &MAX_DENOMINATIONS);
+    int numDenomination = scanf("%d", &MAX_DENOMINATIONS);
+
+    if (numDenomination != 1 || MAX_DENOMINATIONS < 0) {
+        printf("Invalid input\n");
+        return 1;
+    }
 
     /* Setting array size to be the maximum denominations. */
     char identifiers[MAX_DENOMINATIONS];
@@ -37,6 +45,7 @@ int main()
         int userInput = scanf(" %c", &firstCommand);
 
         if (userInput == 1) {
+
             if (firstCommand == 's') {
                 printf("Identifier,Face Value,Count,Total Value\n");
 
@@ -59,8 +68,6 @@ int main()
     
             if (firstCommand == 'a' || firstCommand == 'r') {
                 int newInput = scanf(" %c %d", &secondCommand, &valueAmount);
-
-                
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
                     if (firstCommand == 'a') {
