@@ -4,7 +4,7 @@
 
 int main()
 {
-    int MAX_DENOMINATIONS, coinValue, valueAmount, centValue, loopCheck, multValue = 0;
+    int MAX_DENOMINATIONS, coinValue, valueAmount, centValue, loopCheck, multValue, arrayCheck = 0;
     int dummyVariable = 1;
     double totalValue = 0.0; 
     char coinLetter, firstCommand, secondCommand = '\0';
@@ -15,6 +15,7 @@ int main()
 
     /* Setting array size to be the maximum denominations. */
     char identifiers[MAX_DENOMINATIONS];
+    char commandChars[] = {'a', 'r', 's', 'q'};
     int values[MAX_DENOMINATIONS];
     int coinMultiplier[MAX_DENOMINATIONS];
 
@@ -45,7 +46,8 @@ int main()
                     totalValue += (double) multValue / 100.0;
                 }
 
-                dummyVariable = 0;
+                printf("Overall value of collection: $%.2lf\n", totalValue); //Prints the total value of the collection. 
+
                 loopCheck = 0;
                 continue;
             } 
@@ -54,8 +56,11 @@ int main()
                 dummyVariable = 0;
                 break;
             }
+    
             if (firstCommand == 'a' || firstCommand == 'r') {
                 int newInput = scanf(" %c %d", &secondCommand, &valueAmount);
+
+                
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
                     if (firstCommand == 'a') {
@@ -87,7 +92,8 @@ int main()
             break;
         }
     }
-    printf("Overall value of collection: $%.2lf\n", totalValue);
+    
+    
 
     return 0;
 }
