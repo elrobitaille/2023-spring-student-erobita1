@@ -53,17 +53,23 @@ int main()
                 int newInput = scanf(" %c %d", &secondCommand, &valueAmount);
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
-                    if (identifiers[i] == secondCommand || firstCommand == 'a') {
-                        coinMultiplier[i] += valueAmount;
+                    if (firstCommand == 'a') {
+                        if (identifiers[i] == secondCommand) {
+                            coinMultiplier[i] += valueAmount;
+                            break;
+                        }
                     }
-                    else if (identifiers[i] == secondCommand || firstCommand == 'r') {
-                        coinMultiplier[i] -= valueAmount;
+                    else if (firstCommand == 'r') {
+                        if (identifiers[i] == secondCommand) {
+                            coinMultiplier[i] -= valueAmount;
+                            break;
+                        }
                     }
 
                 }
 
                 if (newInput != 2) {
-                    printf("Invalid Input\n");
+                    printf("Invalid Input\n"); // Checks if there is too litle or too many inputs.
                     break;
                 }
                 loopCheck = 0;
