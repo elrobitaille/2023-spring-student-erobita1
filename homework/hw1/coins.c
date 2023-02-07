@@ -4,98 +4,99 @@
 #include <math.h>
 #include <assert.h>
 #include <string.h>
+#include <stdlib.h>
 
 int main()
 {
-    int MAX_DENOMINATIONS, coinValue, valueAmount, centValue, loopCheck, multValue, arrayCheck = 0;
-    int dummyVariable = 1;
-    double totalValue = 0.0; 
-    char coinLetter, firstCommand, secondCommand = '\0';
+    int MAX_DENOMINATIONS, coin_value, value_amount, cent_value, loop_check, mult_value, array_check = 0;
+    int dummy_variable = 1;
+    double total_value = 0.0; 
+    char coin_letter, first_command, second_command = '\0';
 
     /* Gathers information on how many "denominations" or coins there are. */
     printf("How many denominations? ");
-    int numDenomination = scanf("%d", &MAX_DENOMINATIONS);
+    int num_denomination = scanf("%d", &MAX_DENOMINATIONS);
 
-    if (numDenomination != 1 || MAX_DENOMINATIONS < 0) {
-        printf("Invalid input\n");
+    if (num_denomination != 1 || MAX_DENOMINATIONS < 0) {
+        fprintf(stderr, "Invalid input\n");
         return 1;
     }
 
     /* Setting array size to be the maximum denominations. */
     char identifiers[MAX_DENOMINATIONS];
-    char commandChars[] = {'a', 'r', 's', 'q'};
+    char command_chars[] = {'a', 'r', 's', 'q'};
     int values[MAX_DENOMINATIONS];
-    int coinMultiplier[MAX_DENOMINATIONS];
+    int coin_multiplier[MAX_DENOMINATIONS];
 
     for (int i = 0; i < MAX_DENOMINATIONS; i++) {
         /* Initializes all of the arrays and gathers the currency and their values. */
         printf("Enter coin identifier and value in cents: ");
-        scanf(" %c %d", &coinLetter, &coinValue); 
-        identifiers[i] = coinLetter;
-        values[i] = coinValue;
-        coinMultiplier[i] = 0;
+        scanf(" %c %d", &coin_letter, &coin_value); 
+        identifiers[i] = coin_letter;
+        values[i] = coin_value;
+        coin_multiplier[i] = 0;
     }
 
-    while (dummyVariable) {
-        if (!loopCheck) {
+    while (dummy_variable) {
+        if (!loop_check) {
             printf("Enter a command: ");
         }
-        loopCheck = 1; // Makes it so that "Enter a command: " does not print too many times.
+        loop_check = 1; // Makes it so that "Enter a command: " does not print too many times.
 
-        int userInput = scanf(" %c", &firstCommand);
+        int user_input = scanf(" %c", &first_command);
 
-        if (userInput == 1) {
+        if (user_input == 1) {
 
-            if (firstCommand == 's') {
+            if (first_command == 's') {
                 printf("Identifier,Face Value,Count,Total Value\n");
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
-                    multValue = values[i] * coinMultiplier[i];
-                    printf("%c,%d,%d,%d\n", identifiers[i], values[i], coinMultiplier[i], multValue); 
-                    totalValue += (double) multValue / 100.0;
+                    mult_value = values[i] * coin_multiplier[i];
+                    printf("%c,%d,%d,%d\n", identifiers[i], values[i], coin_multiplier[i], mult_value); 
+                    total_value += (double) mult_value / 100.0;
                 }
 
-                printf("Overall value of collection: $%.2lf\n", totalValue); //Prints the total value of the collection. 
+                printf("Overall value of collection: $%.2lf\n", total_value); //Prints the total value of the collection. 
 
-                loopCheck = 0;
+                loop_check = 0;
                 continue;
             } 
-            else if (firstCommand == 'q') {
+            else if (first_command == 'q') {
                 printf("Bye!\n");
-                dummyVariable = 0;
+                dummy_variable = 0;
                 break;
             }
     
-            if (firstCommand == 'a' || firstCommand == 'r') {
-                int newInput = scanf(" %c %d", &secondCommand, &valueAmount);
+            if (first_command == 'a' || first_command == 'r') {
+                int new_input = scanf(" %c %d", &second_command, &value_amount);
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
-                    if (firstCommand == 'a') {
-                        if (identifiers[i] == secondCommand) {
-                            coinMultiplier[i] += valueAmount;
+                    if (first_command == 'a') {
+                        if (identifiers[i] == second_command) {
+                            coin_multiplier[i] += value_amount;
                             break;
                         }
                     }
-                    else if (firstCommand == 'r') {
-                        if (identifiers[i] == secondCommand) {
-                            coinMultiplier[i] -= valueAmount;
+                    else if (first_command == 'r') {
+                        if (identifiers[i] == second_command) {
+                            coin_multiplier[i] -= value_amount;
                             break;
                         }
                     }
 
                 }
 
-                if (newInput != 2) {
+                if (new_input != 2) {
                     printf("Invalid Input\n"); // Checks if there is too litle or too many inputs.
                     break;
                 }
-                loopCheck = 0;
+                loop_check = 0;
                 continue;
             }
         }
         else {
-            printf("Invalid Input\n");
-            dummyVariable = 0;
+            printf("Bye!\n");
+            dummy_variable = 0;
             break;
         }
     }
