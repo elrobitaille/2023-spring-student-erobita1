@@ -47,7 +47,6 @@ int main()
 
         int user_input = scanf(" %c", &first_command);
 
-        
         if (user_input == 1) {
 
             if (first_command == 's') {
@@ -74,6 +73,22 @@ int main()
                 int new_input = scanf(" %c %d", &second_command, &value_amount); 
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
+                    if (identifiers[i] == second_command) {
+                        array_check = 1;
+                        break;
+                    }
+                    else {
+                        array_check = 0;
+                    }
+                }
+
+                if (array_check == 0) {
+                    fprintf(stderr, "Unknown coin identifier\n");  // Checks if there is too litle or too many inputs.
+                    dummy_variable = 0;
+                    return 3;
+                }
+
+                for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
                     if (first_command == 'a') {
                         if (identifiers[i] == second_command) {
                             coin_multiplier[i] += value_amount;
@@ -88,9 +103,6 @@ int main()
                     }
                 }
 
-
-
-
                 if (new_input != 2) {
                     fprintf(stderr, "Invalid input\n");  // Checks if there is too litle or too many inputs.
                     dummy_variable = 0;
@@ -100,7 +112,7 @@ int main()
                 continue;
             }
             else {
-                printf("Invalid command\n");
+                fprintf(stderr, "Invalid command\n");
                 dummy_variable = 0;
                 return 3;
             }
@@ -111,8 +123,6 @@ int main()
             break;
         }
     }
-    
-    
 
     return 0;
 }
