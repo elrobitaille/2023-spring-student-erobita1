@@ -8,7 +8,7 @@
 
 int main()
 {
-    int MAX_DENOMINATIONS, coin_value, value_amount, cent_value, loop_check, mult_value, array_check = 0;
+    int MAX_DENOMINATIONS, coin_value, value_amount, cent_value, loop_check, mult_value, array_check, reach_check = 0;
     int dummy_variable = 1;
     double total_value = 0.0; 
     char coin_letter, first_command, second_command = '\0';
@@ -28,8 +28,6 @@ int main()
     int values[MAX_DENOMINATIONS];
     int coin_multiplier[MAX_DENOMINATIONS];
 
-    
-
     for (int i = 0; i < MAX_DENOMINATIONS; i++) {
         /* Initializes all of the arrays and gathers the currency and their values. */
         printf("Enter coin identifier and value in cents: ");
@@ -43,12 +41,13 @@ int main()
         if (!loop_check) {
             printf("Enter a command: ");
         }
+        
         loop_check = 1; // Makes it so that "Enter a command: " does not print too many times.
 
         int user_input = scanf(" %c", &first_command);
-
+        
+        /* Scans if first user input value is valid. */
         if (user_input == 1) {
-
             if (first_command == 's') {
                 printf("Identifier,Face Value,Count,Total Value\n");
 
@@ -59,7 +58,6 @@ int main()
                 }
 
                 printf("Overall value of collection: $%.2lf\n", total_value); //Prints the total value of the collection. 
-
                 loop_check = 0;
                 continue;
             } 
@@ -68,7 +66,8 @@ int main()
                 dummy_variable = 0;
                 break;
             }
-    
+
+
             if (first_command == 'a' || first_command == 'r') {
                 int new_input = scanf(" %c %d", &second_command, &value_amount); 
 
@@ -112,9 +111,16 @@ int main()
                 continue;
             }
             else {
-                fprintf(stderr, "Invalid command\n");
-                dummy_variable = 0;
-                return 3;
+                if (array_check) {
+                    fprintf(stderr, "Invalid command\n");
+                    dummy_variable = 0;
+                    return 3;  
+                }
+                else  {
+                    fprintf(stderr, "Invalid input\n");
+                    dummy_variable = 0;
+                    return 1; 
+                }
             }
         }
         else {
