@@ -8,7 +8,7 @@
 
 int main()
 {
-    int MAX_DENOMINATIONS, coin_value, value_amount, cent_value, loop_check, mult_value, array_check, reach_check = 0;
+    int MAX_DENOMINATIONS, coin_value, value_amount, mult_value, array_check, loop_check = 0;
     int dummy_variable = 1;
     double total_value = 0.0; 
     char coin_letter, first_command, second_command = '\0';
@@ -24,7 +24,6 @@ int main()
 
     /* Setting array size to be the maximum denominations. */
     char identifiers[MAX_DENOMINATIONS];
-    char command_chars[] = {'a', 'r', 's', 'q'};
     int values[MAX_DENOMINATIONS];
     int coin_multiplier[MAX_DENOMINATIONS];
 
@@ -37,13 +36,12 @@ int main()
         coin_multiplier[i] = 0;
     }
 
-    while (dummy_variable) {
-        if (!loop_check) {
+    while (dummy_variable == 1) {
+        /* Continuously prompts for a new command whenever input or command is valid. */
+        if (loop_check != 1) {
             printf("Enter a command: ");
         }
-        
-        loop_check = 1; // Makes it so that "Enter a command: " does not print too many times.
-
+    
         int user_input = scanf(" %c", &first_command);
         
         /* Scans if first user input value is valid. */
@@ -51,6 +49,7 @@ int main()
             if (first_command == 's') {
                 printf("Identifier,Face Value,Count,Total Value\n");
 
+                /* Prints out the coin identifiers, their values, and the total cost. */
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
                     mult_value = values[i] * coin_multiplier[i];
                     printf("%c,%d,%d,%d\n", identifiers[i], values[i], coin_multiplier[i], mult_value); 
@@ -58,19 +57,20 @@ int main()
                 }
 
                 printf("Overall value of collection: $%.2lf\n", total_value); //Prints the total value of the collection. 
-                loop_check = 0;
                 continue;
             } 
+            /* Quits the program and prints "Bye!" if the user inputs quit button q. */
             else if (first_command == 'q') {
                 printf("Bye!\n");
                 dummy_variable = 0;
                 break;
             }
 
-
+            /* Grabs the commands a or r, which add or remove coins values. */
             if (first_command == 'a' || first_command == 'r') {
                 int new_input = scanf(" %c %d", &second_command, &value_amount); 
 
+                /* Checks through each identifier to see if the second command is a valid identifier.*/
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
                     if (identifiers[i] == second_command) {
                         array_check = 1;
@@ -84,7 +84,7 @@ int main()
                 if (array_check == 0) {
                     fprintf(stderr, "Unknown coin identifier\n");  // Checks if there is too litle or too many inputs.
                     dummy_variable = 0;
-                    return 3;
+                    return 2;
                 }
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
@@ -107,7 +107,6 @@ int main()
                     dummy_variable = 0;
                     return 1;
                 }
-                loop_check = 0;
                 continue;
             }
             else {
@@ -117,8 +116,10 @@ int main()
                     return 3;  
                 }
                 else  {
-                    fprintf(stderr, "Invalid input\n");
+                    loop_check = 1;
                     dummy_variable = 0;
+                    fprintf(stderr, "Invalid input3\n");
+                    //printf("%d", user_input);
                     return 1; 
                 }
             }
@@ -130,5 +131,5 @@ int main()
         }
     }
 
-    return 0;
+    return 0; //Code successfuly ran with no errors. 
 }
