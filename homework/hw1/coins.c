@@ -28,6 +28,8 @@ int main()
     int values[MAX_DENOMINATIONS];
     int coin_multiplier[MAX_DENOMINATIONS];
 
+    
+
     for (int i = 0; i < MAX_DENOMINATIONS; i++) {
         /* Initializes all of the arrays and gathers the currency and their values. */
         printf("Enter coin identifier and value in cents: ");
@@ -45,6 +47,7 @@ int main()
 
         int user_input = scanf(" %c", &first_command);
 
+        
         if (user_input == 1) {
 
             if (first_command == 's') {
@@ -68,7 +71,7 @@ int main()
             }
     
             if (first_command == 'a' || first_command == 'r') {
-                int new_input = scanf(" %c %d", &second_command, &value_amount);
+                int new_input = scanf(" %c %d", &second_command, &value_amount); 
 
                 for (int i = 0; i < MAX_DENOMINATIONS; ++i) {
                     if (first_command == 'a') {
@@ -83,15 +86,23 @@ int main()
                             break;
                         }
                     }
-
                 }
 
+
+
+
                 if (new_input != 2) {
-                    printf("Invalid Input\n"); // Checks if there is too litle or too many inputs.
-                    break;
+                    fprintf(stderr, "Invalid input\n");  // Checks if there is too litle or too many inputs.
+                    dummy_variable = 0;
+                    return 1;
                 }
                 loop_check = 0;
                 continue;
+            }
+            else {
+                printf("Invalid command\n");
+                dummy_variable = 0;
+                return 3;
             }
         }
         else {
