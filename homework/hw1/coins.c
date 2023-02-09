@@ -30,7 +30,10 @@ int main()
     for (int i = 0; i < MAX_DENOMINATIONS; i++) {
         /* Initializes all of the arrays and gathers the currency and their values. */
         printf("Enter coin identifier and value in cents: ");
-        scanf(" %c %d", &coin_letter, &coin_value); 
+        int read_input = scanf(" %c %d", &coin_letter, &coin_value); 
+        if (read_input != 2) {
+            loop_check = 1;
+        }
         identifiers[i] = coin_letter;
         values[i] = coin_value;
         coin_multiplier[i] = 0;
@@ -38,7 +41,7 @@ int main()
 
     while (dummy_variable == 1) {
         /* Continuously prompts for a new command whenever input or command is valid. */
-        if (loop_check != 1) {
+        if (loop_check == 0) {
             printf("Enter a command: ");
         }
     
@@ -118,8 +121,7 @@ int main()
                 else  {
                     loop_check = 1;
                     dummy_variable = 0;
-                    fprintf(stderr, "Invalid input3\n");
-                    //printf("%d", user_input);
+                    fprintf(stderr, "Invalid input\n");
                     return 1; 
                 }
             }
