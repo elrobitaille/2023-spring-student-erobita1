@@ -8,7 +8,8 @@
 
 int main()
 {
-    int MAX_DENOMINATIONS, coin_value, value_amount, mult_value, array_check, loop_check = 0;
+    int MAX_DENOMINATIONS = 0, coin_value = 0, value_amount = 0, mult_value = 0, loop_check = 0;
+    int array_check = 0;
     int dummy_variable = 1;
     double total_value = 0.0; 
     char coin_letter, first_command, second_command = '\0';
