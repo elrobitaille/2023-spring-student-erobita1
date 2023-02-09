@@ -1,3 +1,15 @@
+commit da967d33126cfce643dd0d6d3b36113f51d2b956
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Thu Feb 9 00:06:25 2023 -0500
+
+    Updated for all cases to work including example 5
+
+commit 2f7ed47048b4d7afb732076274bf2bd504c160e1
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 8 18:04:28 2023 -0500
+
+    All cases work except example 5, added some comments as well
+
 commit 936352eab9d8383d76a458a954218b63f407d682
 Author: Edgar Robitaille <erobita1@jh.edu>
 Date:   Wed Feb 8 15:32:39 2023 -0500
