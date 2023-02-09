@@ -1,0 +1,173 @@
+commit 936352eab9d8383d76a458a954218b63f407d682
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 8 15:32:39 2023 -0500
+
+    Finished majority of provided error exception cases
+
+commit 983a69d80360d8fc8e3b216b6bb0928371793cfa
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 8 12:25:09 2023 -0500
+
+    Finished most error cases provided in HW1, still have to fix Example 5
+
+commit 88511b72d2d21b66aa7389b2b528f949856a0c3d
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 8 01:16:40 2023 -0500
+
+    Added some more error exception catching
+
+commit 213ef177319262cb3928db17c6f0cbe2dd7bd493
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Tue Feb 7 13:16:10 2023 -0500
+
+    Added strerr handling and updated variables to snake case
+
+commit 705699dd5613e257298ad8be0a20e5fc13b4ccce
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Mon Feb 6 16:12:25 2023 -0500
+
+    Added some error catching for denomination input type
+
+commit 583be6a2117ac98800acb298be26c3a25db882c4
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Mon Feb 6 15:30:28 2023 -0500
+
+    Now has multiply and factorial functions
+
+commit e34ee8147f45b4d9fe319ae82706687c4ca794a0
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Sun Feb 5 23:37:56 2023 -0500
+
+    Added some comments and cleared up code
+
+commit 8b0601cbb5b434cce91528a40bb775815a118755
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Sun Feb 5 23:12:33 2023 -0500
+
+    Now calculates the total value of the collection!
+
+commit 75982c662d76c32855447d6371d3372c7a24020a
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Sun Feb 5 22:44:02 2023 -0500
+
+    Now correctly outputs coin values
+
+commit 9c41a3e808d8f1a3e0bde2014a0aa38893208c56
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Sun Feb 5 16:10:48 2023 -0500
+
+    Need to fix coin output of the multiplier.
+
+commit 4414dd689ab5b6b8b8fb7bbad23754b011107ac9
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Sun Feb 5 14:55:59 2023 -0500
+
+    Now allows for inputs of size one or three.
+
+commit 7b4c3aee4a18226456fc9a4aa457520a59e06f57
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Sat Feb 4 13:58:35 2023 -0500
+
+    Commands now take input correctly
+
+commit 6ca12b68b6cd8378403060a2f450f7be57217fbd
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Sat Feb 4 11:29:51 2023 -0500
+
+    Working on Enter a Command Function
+
+commit 449a390695ac7999a6a5ea5a42d597e268c5b012
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Feb 3 21:37:14 2023 -0500
+
+    First iteration which grabs denominations, identifiers, and values.
+
+commit fd2d22dfa39051cd5e2ad6d82099974386a881c5
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Feb 3 18:48:21 2023 -0500
+
+    Finalized Homework 0
+
+commit 112d976cfb9078e30533b2b2b6cf35a40f7c9f97
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Feb 3 13:10:28 2023 -0500
+
+    Finished count2.c code
+
+commit 046063676e9bb30cd4ef77f20520b5a8b8bb9eee
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Feb 3 12:44:52 2023 -0500
+
+    Updated code exercise 4
+
+commit b87248729f6b29f691e233240bd6865fed293f46
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Feb 3 12:42:54 2023 -0500
+
+    First iteration of exercise 4
+
+commit ed6fda107142a7d86921aeab45589f66cf34b99c
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Feb 3 12:26:52 2023 -0500
+
+    Adding exercise 6 files
+
+commit 62a50c33cc1dad23d4fe782e1366df41fcf7ff29
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 1 16:46:09 2023 -0500
+
+    Edited spacing and formatting of code.
+
+commit 15177bd532c6dbc2e228275ca25c435462f4f2c5
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 1 16:17:37 2023 -0500
+
+    Finished homework 0 and verified that code runs.
+
+commit d5f9d3ce40f73eea8aadad977a98323e400a08c8
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 1 13:29:15 2023 -0500
+
+    Added the \n line to the end
+
+commit f28fcd93883294c45c4f00fa0cab45a917aba4e3
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 1 12:22:49 2023 -0500
+
+    First iteration of exercise 4, almost there!
+
+commit 05d34371a3a1941d391c2dcef8e887c5c9d06b85
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Wed Feb 1 12:21:15 2023 -0500
+
+    File now includes my name
+
+commit 66b9e11b9c9fcfca86e7b30e43888a5318a403a7
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Sat Jan 28 10:55:43 2023 -0500
+
+    Added files one.c, two.c, and three.c, which contain the prize winners.
+
+commit 7df3ec1396c166122a6d84fa34901d99a11e29f4
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Jan 27 13:14:17 2023 -0500
+
+    updated README
+
+commit 23c2c268a862423994a17c6628e7d5bba29a6713
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Jan 27 13:12:13 2023 -0500
+
+    created README
+
+commit b05f42dd927ce439e1b9e810702c145e3c70119c
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Jan 27 12:54:27 2023 -0500
+
+    x
+
+commit 799fdc506d466c79ffd0ad039368c956561dabee
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Jan 27 12:42:11 2023 -0500
+
+    first test
