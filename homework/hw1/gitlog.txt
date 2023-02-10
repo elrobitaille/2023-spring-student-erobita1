@@ -1,3 +1,9 @@
+commit b3ddba6d5eac6871bd6923274e93446f7ed78912
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Fri Feb 10 12:36:57 2023 -0500
+
+    Fixed invalid input case for second command
+
 commit 35e4bb005854e01828ae41141ac1e412329da3a1
 Author: Edgar Robitaille <erobita1@jh.edu>
 Date:   Thu Feb 9 13:00:52 2023 -0500
