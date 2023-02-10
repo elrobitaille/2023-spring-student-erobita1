@@ -1,10 +1,6 @@
 //8BF0CD
 
 #include <stdio.h>
-#include <math.h>
-#include <assert.h>
-#include <string.h>
-#include <stdlib.h>
 
 int main()
 {
@@ -18,7 +14,7 @@ int main()
     printf("How many denominations? ");
     int num_denomination = scanf("%d", &MAX_DENOMINATIONS);
 
-    if (num_denomination != 1 || MAX_DENOMINATIONS < 0) {
+    if (num_denomination != 1 || MAX_DENOMINATIONS < 0 || MAX_DENOMINATIONS > 20) {
         fprintf(stderr, "Invalid input\n");
         return 1;
     }
@@ -85,7 +81,7 @@ int main()
                     }
                 }
 
-                if (array_check == 0) {
+                if (array_check == 0 && new_input == 2) {
                     fprintf(stderr, "Unknown coin identifier\n");  // Checks if there is too litle or too many inputs.
                     dummy_variable = 0;
                     return 2;

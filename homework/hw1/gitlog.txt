@@ -1,3 +1,15 @@
+commit 35e4bb005854e01828ae41141ac1e412329da3a1
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Thu Feb 9 13:00:52 2023 -0500
+
+    All cases work, reinitialized variables at top
+
+commit 6b27be36b0941e96a7890da4bcb1d2285e209a20
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Thu Feb 9 00:20:11 2023 -0500
+
+    All provided examples should now work for error handling, updating gitlog.txt
+
 commit 7782112366fcce28b778bf466f1c2ec5eafc6fc3
 Author: Edgar Robitaille <erobita1@jh.edu>
 Date:   Thu Feb 9 00:10:08 2023 -0500
