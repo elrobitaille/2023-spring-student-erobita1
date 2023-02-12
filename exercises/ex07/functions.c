@@ -1,19 +1,19 @@
 #include <stdio.h>
 
-float div (float a, float b); // declare the div function.
-float mult (float a, float b); //declare the mult function. 
-long fac (int a); //declare the factorial function. 
+float div(float a, float b);
+float mult(float a, float b); 
+long fac(int a);
 
 int main() {
   float a = 5, b = 8;
   printf("%f divided by %f is %f\n", a, b, div(a, b));
 
-  // Part 2 - to test mult
-printf("%f x %f is %f (expected 40)\n", a, b, mult(a, b));
+  //Part 2 - to test mult
+  printf("%f x %f is %f (expected 40)\n", a, b, mult(a, b));
 
   // Part 2 - to test fac
-printf("factorial of -4 is %ld (expected 0)\n", fac(-4));
-printf("factorial of 10 is %ld (expected 3628800)\n", fac(10));
+  printf("factorial of -4 is %ld (expected 0)\n", fac(-4));
+  printf("factorial of 10 is %ld (expected 3628800)\n", fac(10));
 
   // Part 3 - to test bsearch
   //float myray[] = {3.4, 4.5, 5.6, 6.7, 7.8, 8.9, 9.0, 10, 15, 20, 25, 100};
@@ -40,19 +40,16 @@ float div(float a, float b) {
   return a / b;
 }
 
-float mult (float a, float b) {
+float mult(float a, float b) {
   return a * b;
 }
 
 long fac(int a) {
-  if (a == 1) { 
-    return 1;
-  }
-  if (a <= 0) {
-    return 0;
-  }
-  else {
-    return (a * fac(a - 1));
-  }
-  
+    if (a < 0) {
+        return 0;
+    }
+    if (a == 0 || a == 1) {
+        return 1;
+    }
+    return a * fac(a - 1);
 }
