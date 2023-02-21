@@ -28,11 +28,13 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
 
   int i = 0;
   while (i < word_count)  {
+    /* Iterate through file and make sure input is valid by checking size of fscanf. */
     if (fscanf(fp, "%s", words[i]) != 1) {
       fprintf(stderr, "Error, Invalid input file format\n");
       fclose(fp);
       return -1;
     }
+    /* Makre sure the number of words does not exceed the max word size. */
     if (strlen(words[i]) > MAX_WORD_SIZE) {
       fprintf(stderr, "Error, too many words in input file\n");
       fclose(fp);
@@ -40,8 +42,6 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
     }
     i++;
   }
-
-
 
   fclose(fp);
   return word_count; 
