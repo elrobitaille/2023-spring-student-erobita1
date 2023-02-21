@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "functions.h"
 
@@ -8,7 +9,6 @@
 
 
 int main(int argc, const char *argv[]) {
-  // ./hw3.c input.txt
   char words[ MAX_WORD_NUM ][ MAX_WORD_SIZE + 1 ]; 
   int size = MAX_WORD_NUM;
 
@@ -24,14 +24,19 @@ int main(int argc, const char *argv[]) {
     fprintf(stderr, "Error opening file\n");
     return 1;
   }
-  int num_words = read_file(input_file, words, MAX_WORD_NUM);
 
-  printf("File contents:\n");
-  for (int i = 0; i < num_words; i++) {
-    printf("%s\n", words[i]);
+  int num_words = read_file(input_file, words, MAX_WORD_NUM); //Check if there is an issue in functions.c.
+
+  if (num_words != 0) {
+    fprintf(stderr, "Error in functions.c");
   }
 
-  fclose(input_file); //Close the input file
+  int restriction_length = DEFAULT_RESTRICTION; 
+  if (argc == 3) {
+    restriction_length = atoi(argv[2]); // Set restriction length from the command line argument, utilize atoi from stdlib.h.
+  }
+
+  fclose(input_file); //Close the input file.
 
   return 0;
 }
