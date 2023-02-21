@@ -5,15 +5,46 @@
 
 int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
 
+  /* Check if the file is null, leading to an error if nothing inside. */
   if (fp == NULL) {
-    fprintf(stderr, "File not found"); 
-    return 1;
+    fprintf(stderr, "File not found\n"); 
+    return -1;
   }
 
-  while (fscanf(fp, "%s", words) != EOF) {
-        printf("%s ", words);
+  /* Check the number of words in the file, if not equal to 1, there is an error. */
+  int word_count = 0;
+  if (fscanf(fp, "%d", &word_count) != 1) {
+        fprintf(stderr, "Invalid input file format\n");
+        fclose(fp);
+        return -1;
     }
 
+  /* If the word count is less than zero or greater than the size, results in an error. */
+  if (word_count < 0 || word_count > size) {
+    fprintf(stderr, "Error: Invalid word count\n");
+    fclose(fp);
+    return -1;
+  }
+
+  int i = 0;
+  while (i < word_count)  {
+    if (fscanf(fp, "%s", words[i]) != 1) {
+      fprintf(stderr, "Error, Invalid input file format\n");
+      fclose(fp);
+      return -1;
+    }
+    if (strlen(words[i]) > MAX_WORD_SIZE) {
+      fprintf(stderr, "Error, too many words in input file\n");
+      fclose(fp);
+      return -1;
+    }
+    i++;
+  }
+
+
+
+  fclose(fp);
+  return word_count; 
 
 }
 
