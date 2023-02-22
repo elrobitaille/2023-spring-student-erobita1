@@ -42,22 +42,44 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
     i++;
   }
 
-  return 0; 
+  return word_count; 
 
 }
 
-int match(const char *regex, const char *word, int restriction) {
-  // TODO: Implement me!
   //match(ca*t, caaat)
   //match(a*t, aaat)
   //match() 
-  
+int match(const char *regex, const char *word, int restriction) {
   if (*regex == '\0') {
         // Regex matches the string.
         return 1;
     }
-  
-  
 
+  /* For test cases in test_match_regex, for normal characters without any regex special characters. */
+  if (!has_regex(regex)) {
+    int equal_values = 0;
+    if (strlen(regex) != strlen(word)) {
+      return 0;
+    }
+    
+    for (int i = 0; i < strlen(word); i++) {
+      if (word[i] == regex[i]) {
+         equal_values += 1;
+      }
+    }
+
+    if (equal_values == strlen(word)) {
+      return 1;
+    }
+    else {
+      return 0;
+    }
+  }
+  
+  
+}
+
+int has_regex(const char *str) {
+  return strchr(str, '*') != NULL || strchr(str, '?') != NULL || strchr(str, '~') != NULL;
 }
 
