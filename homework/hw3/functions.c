@@ -1,7 +1,10 @@
+//Edgar Robitaille
+//erobita1
 #include "functions.h"
-
 #include <stdio.h>
 #include <string.h>
+
+
 
 int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
 
@@ -47,8 +50,13 @@ int match(const char *regex, const char *word, int restriction) {
   // TODO: Implement me!
   //match(ca*t, caaat)
   //match(a*t, aaat)
-  //match()
-
+  //match() 
+  
+  if (*regex == '\0') {
+        // Regex matches the string.
+        return 1;
+    }
+  
   
 
 }
