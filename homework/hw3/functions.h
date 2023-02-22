@@ -1,3 +1,5 @@
+//Edgar Robitaille
+//erobita1
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
@@ -20,6 +22,14 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size);
  * @return 1 if it is a match, else 0 if it's not a match.
  */
 int match(const char *regex, const char *word, int restriction);
+
+/** Function to check if the variable "regex" has any special 
+ * characters like *, ?, ~. This is used for cases that do 
+ * not have any special regex characters, normal strings. 
+ * @param str the string being tested to see if regex is present.
+ * @return 0 if there is no regex, 1 if there is. 
+*/
+int has_regex(const char *str);
 
 // Feel free to add more helper functions! Make sure they are well commented.
 // If you do change the match function, note that it is called by the functions
