@@ -1,3 +1,5 @@
+//Edgar Robitaille
+//erobita1
 #include <assert.h>
 #include <stdio.h>
 
@@ -10,19 +12,25 @@
 
 #define MAX_WORD_NUM 1024
 
+//Edgar Robitaille
+//erobita1
+
 void test_read_files() {
   FILE* fptr = fopen("test_file_1.txt", "w");
   fprintf(fptr, "5\nintermediate\ninttterrmeediateeee\nprogram\nppproograaamm\naaa");
   fclose(fptr);
-
 }
 
 void test_match_regex() {
+  /* No special regex characters cases. */
   assert(match("abc", "abc", TEST_RESTRICTION_1) == 1);
   assert(match("abcd", "abc", TEST_RESTRICTION_1) == 0);
   assert(match("", "", TEST_RESTRICTION_1) == 1);
-
-  // TODO: Write your own tests!
+  assert(match("abcd", "abc", TEST_RESTRICTION_1) == 0);
+  assert(match("abc", "abcd", TEST_RESTRICTION_1) == 0);
+  assert(match("abc", "bc", TEST_RESTRICTION_1) == 0);
+  assert(match("aaaaaaa", "aaa", TEST_RESTRICTION_1) == 0);
+  assert(match("aaa", "aaaaaaa", TEST_RESTRICTION_1) == 0);
 }
 
 void test_match_regex_star() {
@@ -65,8 +73,9 @@ void test_match_regex_tilde_restriction() {
 
 int main() {
   printf("Starting Tests...\n");
-  /* test_read_files();
+  test_read_files();
   test_match_regex();
+  /*
   test_match_regex_star();
   test_match_regex_question();
   test_match_regex_tilde();
