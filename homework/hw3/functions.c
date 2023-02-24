@@ -54,14 +54,22 @@ int match(const char *regex, const char *word, int restriction) {
   
   /* Take care of the * special regex character. */
   if (*(regex+1) == '*') {
-    if (*word == *regex) {
+    if (*word == *regex || *regex == '?') {
       if (match(regex, word + 1, restriction)) {
         return 1;
       }  
     }
-
-  return (match(regex + 2, word, restriction)); 
+    return (match(regex + 2, word, restriction)); 
   }
+
+  if (*(regex+1) == '?') {
+    if (*word == *regex || *regex == '?') {
+      if (match(regex + 2, word + 1, restriction)) {
+        return 1;
+        }  
+    }
+      return (match(regex + 2, word, restriction)); 
+    }
 
   /* If the words are equal, recursively call match to show that they are the same. */
   if (*regex == *word) {
