@@ -45,33 +45,25 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
 }
 
 int match(const char *regex, const char *word, int restriction) {
-  if (*regex == '\0') {
-        // Regex matches the string.
-        return 1;
-    }
+  /* Both strings are empty so they match, return 1. */
+  if (*regex == '\0' && *word == '\0') {
+    return 1;
+  }
 
-  /* For test cases in test_match_regex, for normal characters without any regex special characters. */
-  if (!has_regex(regex)) {
-    int equal_values = 0;
-    if (strlen(regex) != strlen(word)) {
-      return 0;
-    }
-    
-    /* Add one for each character that is the same. */
-    for (int i = 0; i < strlen(word); i++) {
-      if (word[i] == regex[i]) {
-         equal_values += 1;
-      }
-    }
+  /* One string is not empty while other is empty, so no match, return 0. */
+  if (*regex == '\0' || *word == '\0') {
+    return 0;
+  }
 
-    /* If all values are equal, then return 1. Else, return 0.*/
-    if (equal_values == strlen(word)) {
-      return 1;
-    } else {
-      return 0;
-    }
-  } 
+  /* Check if the regular word matches without special regex character. */
+  if (*regex == *word) {
+    return match(regex+1, word+1, restriction);
+  }
+  
+  return 0;
+
 }
+
 
 int has_regex(const char *str) {
   return strchr(str, '*') != NULL || strchr(str, '?') != NULL || strchr(str, '~') != NULL;
