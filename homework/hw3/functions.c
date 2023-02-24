@@ -40,7 +40,7 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
     i++;
   }
 
-  return word_count; 
+  return word_count;  /* Return the word count of the file, showing that read_file successfully ran. */
 
 }
 
@@ -48,20 +48,27 @@ int match(const char *regex, const char *word, int restriction) {
   /* Both strings are empty so they match, return 1. */
   if (*regex == '\0' && *word == '\0') {
     return 1;
-  }
-
-  /* One string is not empty while other is empty, so no match, return 0. */
-  if (*regex == '\0' || *word == '\0') {
+  } else if (*regex == '\0' && *word != '\0') {
     return 0;
   }
+  
+  /* Take care of the * special regex character. */
+  if (*(regex+1) == '*') {
+    if (*word == *regex) {
+      if (match(regex, word + 1, restriction)) {
+        return 1;
+      }  
+    }
 
-  /* Check if the regular word matches without special regex character. */
+  return (match(regex + 2, word, restriction)); 
+  }
+
+  /* If the words are equal, recursively call match to show that they are the same. */
   if (*regex == *word) {
     return match(regex+1, word+1, restriction);
   }
   
   return 0;
-
 }
 
 
