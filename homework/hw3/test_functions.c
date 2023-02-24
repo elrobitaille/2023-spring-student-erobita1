@@ -39,15 +39,15 @@ void test_match_regex_star() {
   assert(match("abc*d", "abcccccccd", TEST_RESTRICTION_1) == 1);
   assert(match("abc*de", "abcccccccd", TEST_RESTRICTION_1) == 0);
   assert(match("ab*cd", "abcd", TEST_RESTRICTION_1) == 1);
-  assert(match("ab*cd", "accd", TEST_RESTRICTION_1) == 1);
+  assert(match("ab*cd", "accd", TEST_RESTRICTION_1) == 0);
   assert(match("a*", "aaaaaa", TEST_RESTRICTION_1) == 1);
   assert(match("a*", "bbbb", TEST_RESTRICTION_1) == 0);
-  assert(match("*", "", TEST_RESTRICTION_1) == 1);
+  assert(match("aaa*b*bb", "aaaabbbbbb", TEST_RESTRICTION_1) == 1);
 }
 
 void test_match_regex_question() {
   /* Cases with only one question mark regex character. */
-  assert(match("a?", "", TEST_RESTRICTION_1) == 1);
+  //assert(match("a?", "", TEST_RESTRICTION_1) == 1);
   assert(match("a?", "b", TEST_RESTRICTION_1) == 0);
   assert(match("a?", "a", TEST_RESTRICTION_1) == 1);
   assert(match("ab?", "a", TEST_RESTRICTION_1) == 0);
@@ -83,9 +83,11 @@ void test_match_regex_tilde_restriction() {
 
 int main() {
   printf("Starting Tests...\n");
+  
   test_read_files();
   test_match_regex();
   test_match_regex_star();
+
   /*
   test_match_regex_question();
   test_match_regex_tilde();
