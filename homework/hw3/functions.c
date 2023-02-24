@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
-
 int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
 
   /* Check if the file is null, leading to an error if nothing inside. */
@@ -46,9 +44,6 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
 
 }
 
-  //match(ca*t, caaat)
-  //match(a*t, aaat)
-  //match() 
 int match(const char *regex, const char *word, int restriction) {
   if (*regex == '\0') {
         // Regex matches the string.
@@ -62,21 +57,20 @@ int match(const char *regex, const char *word, int restriction) {
       return 0;
     }
     
+    /* Add one for each character that is the same. */
     for (int i = 0; i < strlen(word); i++) {
       if (word[i] == regex[i]) {
          equal_values += 1;
       }
     }
 
+    /* If all values are equal, then return 1. Else, return 0.*/
     if (equal_values == strlen(word)) {
       return 1;
-    }
-    else {
+    } else {
       return 0;
     }
-  }
-  
-  
+  } 
 }
 
 int has_regex(const char *str) {
