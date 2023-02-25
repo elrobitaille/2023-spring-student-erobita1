@@ -45,16 +45,21 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
 }
 
 int match(const char *regex, const char *word, int restriction) {
-  /* Both strings are empty so they match, return 1. */
+  /* This is the base case for regex. If both word and regex are empty then they are a match, return 1. */
   if (*regex == '\0' && *word == '\0') {
     return 1;
+  /* No match if regex is empty while the word isn't, return 0. */
   } else if (*regex == '\0' && *word != '\0') {
     return 0;
   }
   
-  /* Take care of the * special regex character. */
+  /* Checks if the next character is the special regex character *. */
   if (*(regex+1) == '*') {
+    /* Checks if current character matches character preceding asterisk, or that it is a ? regex character. */
     if (*word == *regex || *regex == '?') {
+      /* If true, recursively calls match and uses next character as a starting point.
+         If this condition fails, then it recursively calls again and skips +2 characters 
+         because +1 has already been taken care of in the earlier i statement  */
       if (match(regex, word + 1, restriction)) {
         return 1;
       }  
@@ -62,7 +67,8 @@ int match(const char *regex, const char *word, int restriction) {
     return (match(regex + 2, word, restriction)); 
   }
 
-  if (*(regex+1) == '?') {
+  /* Checks if the next character is the special regex character ?. */
+  if (*(regex + 1) == '?') {
     if (*word == *regex || *regex == '?') {
       if (match(regex + 2, word + 1, restriction)) {
         return 1;
@@ -71,28 +77,31 @@ int match(const char *regex, const char *word, int restriction) {
       return (match(regex + 2, word, restriction)); 
     }
 
+  /* Checks if the next character is the special regex character ~. */
   if (*regex == '~') {
-    for (int i = 0; i <= restriction; i++) {
-      if (match(regex + 1, word + i, restriction - i)) {
-        return 1;
-      }
-      if (word[i] == '\0') {
-        return 0;
-      }
+    int new_restriction = restriction;
+    /* Add 10 to the restriction space if there are successive ~ special characters. */
+    while (*++regex == '~') {
+        new_restriction += 10;
+    }
+    for (int i = 0; i <= new_restriction; i++) {
+        if (match(regex, word + i, new_restriction - i)) {
+            return 1;
+        }
+        /* For cases to prevent overload past end of array bound, stop when reaching the null terminator. */
+        if (word[i] == '\0') {
+            return 0;
+        }
     }
     return 0;
-  }
+}
 
   /* If the words are equal, recursively call match to show that they are the same. */
   if (*regex == *word) {
     return match(regex+1, word+1, restriction);
   }
   
-  return 0;
+  return 0; // No match was reached, return 0. 
 }
 
-
-int has_regex(const char *str) {
-  return strchr(str, '*') != NULL || strchr(str, '?') != NULL || strchr(str, '~') != NULL;
-}
 
