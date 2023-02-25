@@ -34,6 +34,7 @@ int main(int argc, const char *argv[]) {
     return -1;
   }
 
+  /* Setting default restriction length as 10. */
   int restriction_length = DEFAULT_RESTRICTION; 
   if (argc == 3) {
     restriction_length = atoi(argv[2]); // Set restriction length from the command line argument, utilize atoi from stdlib.h.
@@ -46,9 +47,11 @@ int main(int argc, const char *argv[]) {
     }
   }
 
-  char regex[100];
+  /* Create a list to read the regex character from the user. */
+  char regex[MAX_INPUT_SIZE];
   int valid_match = 1;
 
+  /* Gathers the regex expression from the user, then print corresponding matches to the pattern.*/
   while (valid_match == 1) {
     printf("Enter a regular expression: ");
    valid_match = scanf("%99s", regex);
@@ -56,6 +59,7 @@ int main(int argc, const char *argv[]) {
       break;
     }
 
+    /* Iterate through the words array and print out the matching patterns by calling match. */
     int foundMatch = 0;
     int validMatch = 0;
     for (int i = 0; i < num_words; i++) {
@@ -65,6 +69,7 @@ int main(int argc, const char *argv[]) {
         validMatch = 1;
       }
     }
+    /* If no match is found, print no match. */
     if (!foundMatch) {
       fprintf(stdout, "No match found for regex \'%s\'\n", regex);
       validMatch = 1;
@@ -74,7 +79,7 @@ int main(int argc, const char *argv[]) {
     }
   }
 
-  fclose(input_file);
+  fclose(input_file); //Close the input file 
 
   return 0;
 }
