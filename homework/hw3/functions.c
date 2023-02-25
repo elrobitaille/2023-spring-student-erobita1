@@ -60,7 +60,6 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
     
   }
 
-
   return word_count;  /* Return the word count of the file, showing that read_file successfully ran. */
 
 }
@@ -88,7 +87,11 @@ int match(const char *regex, const char *word, int restriction) {
     return (match(regex + 2, word, restriction)); 
   }
 
-  /* Checks if the next character is the special regex character ?. */
+  /* Checks if the next character is the special regex character ?. 
+  Uses very similar logic to the regex character, except uses the 
+  difference that question mark is binary in that it measures 
+  presence or not, while * measures none or multiple presence in 
+  the string.  */
   if (*(regex + 1) == '?') {
     if (*word == *regex || *regex == '?') {
       if (match(regex + 2, word + 1, restriction)) {
