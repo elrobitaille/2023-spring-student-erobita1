@@ -46,7 +46,35 @@ int main(int argc, const char *argv[]) {
     }
   }
 
-  fclose(input_file); //Close the input file.
+  char regex[100];
+  int valid_match = 1;
+
+  while (valid_match == 1) {
+    printf("Enter a regular expression: ");
+   valid_match = scanf("%99s", regex);
+    if (valid_match != 1) {
+      break;
+    }
+
+    int foundMatch = 0;
+    int validMatch = 0;
+    for (int i = 0; i < num_words; i++) {
+      if (match(regex, words[i], restriction_length)) {
+        printf("%s\n", words[i]);
+        foundMatch = 1;
+        validMatch = 1;
+      }
+    }
+    if (!foundMatch) {
+      fprintf(stdout, "No match found for regex \'%s\'\n", regex);
+      validMatch = 1;
+    }
+    if (validMatch) {
+      break;
+    }
+  }
+
+  fclose(input_file);
 
   return 0;
 }
