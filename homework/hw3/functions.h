@@ -23,14 +23,6 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size);
  */
 int match(const char *regex, const char *word, int restriction);
 
-/** Function to check if the variable "regex" has any special 
- * characters like *, ?, ~. This is used for cases that do 
- * not have any special regex characters, normal strings. 
- * @param str the string being tested to see if regex is present.
- * @return 0 if there is no regex, 1 if there is. 
-*/
-int has_regex(const char *str);
-
 // Feel free to add more helper functions! Make sure they are well commented.
 // If you do change the match function, note that it is called by the functions
 // in test_functions.c so make sure to change the call to match there accordingly.
