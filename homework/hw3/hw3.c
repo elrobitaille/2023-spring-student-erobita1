@@ -11,7 +11,6 @@
 
 int main(int argc, const char *argv[]) {
   char words[ MAX_WORD_NUM ][ MAX_WORD_SIZE + 1 ]; 
-  int size = MAX_WORD_NUM;
 
   /* Check if there is a correct number of arguments when running the program, 2 or 3 depending if there is a restriction.*/
   if (argc != 2 && argc != 3) {
@@ -54,7 +53,6 @@ int main(int argc, const char *argv[]) {
 
   /* Gathers the regex expression from the user, then print corresponding matches to the pattern.*/
   while (valid_match == 1) {
-    printf("Enter a regular expression: ");
    valid_match = fscanf(stdin, "%s", regex);
     if (valid_match != 1) {
       break;
