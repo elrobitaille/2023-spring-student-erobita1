@@ -28,9 +28,10 @@ int main(int argc, const char *argv[]) {
 
   int num_words = read_file(input_file, words, MAX_WORD_NUM); //Check if there is an issue in functions.c.
 
+
   /* If the number of words is zero or less, there is an issue in functions.c. */
   if (num_words <= 0) {
-    fprintf(stderr, "Error in functions.c");
+    fprintf(stderr, "Error in functions.c\n");
     return -1;
   }
 
@@ -54,7 +55,7 @@ int main(int argc, const char *argv[]) {
   /* Gathers the regex expression from the user, then print corresponding matches to the pattern.*/
   while (valid_match == 1) {
     printf("Enter a regular expression: ");
-   valid_match = scanf("%99s", regex);
+   valid_match = fscanf(stdin, "%s", regex);
     if (valid_match != 1) {
       break;
     }
@@ -75,7 +76,7 @@ int main(int argc, const char *argv[]) {
       validMatch = 1;
     }
     if (validMatch) {
-      break;
+      continue;
     }
   }
 
