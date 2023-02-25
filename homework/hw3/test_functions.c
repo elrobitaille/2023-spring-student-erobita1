@@ -17,8 +17,7 @@
 
 void test_read_files() {
   /* Create the file from within this function as provided on Gradescope. */
-  char words[ MAX_WORD_NUM ][ MAX_WORD_SIZE + 1 ]; 
-  FILE* fptr = fopen("test_file_1.txt", "w");
+  FILE* fptr = fopen("test_file_2.txt", "w");
   fprintf(fptr, "5\nintermediate\ninttterrmeediateeee\nprogram\nppproograaamm\naaa");
   fclose(fptr);
 }
