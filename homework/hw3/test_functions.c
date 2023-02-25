@@ -90,6 +90,15 @@ void test_match_regex_multiple() {
   assert(match("amo~n?g ?us", "amoooooooooooogus", TEST_RESTRICTION_1) == 0);
   assert(match("~amo~n?g ?us", "aaaaaaamoooooooooooogus", TEST_RESTRICTION_1) == 0);
   assert(match("~amo~n?g ?us", "aaaamoooooooogus", TEST_RESTRICTION_1) == 1);
+  assert(match("intermediate", "intermediate", TEST_RESTRICTION_1) == 1);
+  assert(match("int*e*r*me*diate*", "intermediate", TEST_RESTRICTION_1) == 1);
+  assert(match("int*e*r*me*diate*", "inttterrmeediateeee", TEST_RESTRICTION_1) == 1);
+  assert(match("ina?ttt?t*e*r*ms?e*diate*", "inttterrmeediateeee", TEST_RESTRICTION_1) == 1);
+  assert(match("~", "program", TEST_RESTRICTION_1) == 1);
+  assert(match("~", "aaa", TEST_RESTRICTION_1) == 1);
+  assert(match("~a", "aaa", TEST_RESTRICTION_1) == 1);
+  assert(match("a?a?a?a?a?a?a?aaa", "aaa", TEST_RESTRICTION_1) == 1);
+  assert(match("a*", "aaa", TEST_RESTRICTION_1) == 1);
 }
 
 void test_match_regex_tilde_restriction() {
