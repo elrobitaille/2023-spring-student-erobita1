@@ -34,7 +34,7 @@ void test_match_regex() {
 }
 
 void test_match_regex_star() {
-  /* Tests with only one star regex character.*/
+  /* Tests with star regex character.*/
   assert(match("abcd*", "abc", TEST_RESTRICTION_1) == 1);
   assert(match("abc*d", "abcccccccd", TEST_RESTRICTION_1) == 1);
   assert(match("abc*de", "abcccccccd", TEST_RESTRICTION_1) == 0);
@@ -46,25 +46,32 @@ void test_match_regex_star() {
 }
 
 void test_match_regex_question() {
-  /* Cases with only one question mark regex character. */
-  //assert(match("a?", "", TEST_RESTRICTION_1) == 1);
+  /* Cases with question mark regex character. */
+  assert(match("a?", "", TEST_RESTRICTION_1) == 1);
   assert(match("a?", "b", TEST_RESTRICTION_1) == 0);
   assert(match("a?", "a", TEST_RESTRICTION_1) == 1);
-  assert(match("ab?", "a", TEST_RESTRICTION_1) == 0);
+  assert(match("ab?", "a", TEST_RESTRICTION_1) == 1);
   assert(match("ab?", "ab", TEST_RESTRICTION_1) == 1);
   assert(match("ab?", "abc", TEST_RESTRICTION_1) == 0);
-  assert(match("?bc", "abc", TEST_RESTRICTION_1) == 1);
-  assert(match("ab?", "abc", TEST_RESTRICTION_1) == 1);
-  assert(match("ab?", "ab", TEST_RESTRICTION_1) == 1);  
+  assert(match("ab?", "abc", TEST_RESTRICTION_1) == 0);
+  assert(match("ab?", "ab", TEST_RESTRICTION_1) == 1); 
+  assert(match("a?b?", "ab", TEST_RESTRICTION_1) == 1);  
+  assert(match("a?b?", "", TEST_RESTRICTION_1) == 1);  
 }
 
 void test_match_regex_tilde() {
   assert(match("~", "aaaa", TEST_RESTRICTION_1) == 1);
   assert(match("~", "", TEST_RESTRICTION_1) == 1);
   assert(match("~", "a", TEST_RESTRICTION_1) == 1);
-
-
-  // TODO: Write your own tests!
+  assert(match("~~", "aaaa", TEST_RESTRICTION_1) == 1);
+  assert(match("~", "abcdefghijk", TEST_RESTRICTION_1) == 0);
+  assert(match("~", "abcdefghij", TEST_RESTRICTION_1) == 1);
+  assert(match("~bc", "bbc", TEST_RESTRICTION_1) == 1);
+  assert(match("~bc", "abcd", TEST_RESTRICTION_1) == 0);
+  assert(match("~~a~~", "bbbbbaaa", TEST_RESTRICTION_1) == 1);
+  assert(match("~~a~~b~~c~~", "xaxxbxxc", TEST_RESTRICTION_1) == 1);
+  assert(match("a~", "abcdefghij", TEST_RESTRICTION_1) == 1);
+  assert(match("a~", "abcdefghijklm", TEST_RESTRICTION_1) == 0);
 }
 
 void test_match_regex_multiple() {
@@ -73,12 +80,11 @@ void test_match_regex_multiple() {
   assert(match("!~2*keK?ee?rCC?C*aP?E*eR*T*", "!2222keKerCCCaeRRRT",
                TEST_RESTRICTION_1) == 1);
   assert(match("~abc", "sda12!$2", TEST_RESTRICTION_1) == 0);
-
-  // TODO: Write your own tests!
+  assert(match("~a~bc*d?", "sssa12bcccccc", TEST_RESTRICTION_1) == 1);
 }
 
 void test_match_regex_tilde_restriction() {
-  // TODO: Write your own tests!
+  
 }
 
 int main() {
@@ -87,12 +93,9 @@ int main() {
   test_read_files();
   test_match_regex();
   test_match_regex_star();
-
-  /*
   test_match_regex_question();
   test_match_regex_tilde();
   test_match_regex_multiple();
   test_match_regex_tilde_restriction(); 
-  */
   printf("All tests passed!!!\n");
 }
