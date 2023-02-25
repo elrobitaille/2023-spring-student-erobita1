@@ -84,12 +84,15 @@ void test_match_regex_multiple() {
 }
 
 void test_match_regex_tilde_restriction() {
-  
+  assert(match("~~","intermediate", TEST_RESTRICTION_1) == 1);
+  assert(match("~~","intermediate", TEST_RESTRICTION_2) == 0);
+  assert(match("~~","intermediate", TEST_RESTRICTION_3) == 0);
+  assert(match("~","intermediaintermediaintermedia", TEST_RESTRICTION_4) == 1);
+  assert(match("~","intermediaintermediaintermediate", TEST_RESTRICTION_4) == 0);
 }
 
 int main() {
   printf("Starting Tests...\n");
-  
   test_read_files();
   test_match_regex();
   test_match_regex_star();

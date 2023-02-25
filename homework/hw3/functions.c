@@ -40,6 +40,22 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
     i++;
   }
 
+  /* Code to check if first number in file is invalid and less than number of total words in file. */
+  int new_count = 0;
+  for (int i = 0; i < strlen(words); i++) {
+    if (words[i+1] != NULL && strcmp(words[i], "\n") != 0 && strcmp(words[i], "\0") != 0) {
+      new_count += 1;
+    }
+  }
+
+  /* If it is invalid, the number will be less than the number of words in the file. */
+  if (new_count < word_count) {
+    fprintf(stderr, "Error with first number in file\n");
+  }
+
+  printf("%d : %d", new_count, word_count);
+
+  
   return word_count;  /* Return the word count of the file, showing that read_file successfully ran. */
 
 }
@@ -80,9 +96,9 @@ int match(const char *regex, const char *word, int restriction) {
   /* Checks if the next character is the special regex character ~. */
   if (*regex == '~') {
     int new_restriction = restriction;
-    /* Add 10 to the restriction space if there are successive ~ special characters. */
+    /* Add restriction value to the restriction space if there are successive ~ special characters. */
     while (*++regex == '~') {
-        new_restriction += 10;
+        new_restriction += restriction;
     }
     for (int i = 0; i <= new_restriction; i++) {
         if (match(regex, word + i, new_restriction - i)) {
@@ -94,7 +110,7 @@ int match(const char *regex, const char *word, int restriction) {
         }
     }
     return 0;
-}
+  }
 
   /* If the words are equal, recursively call match to show that they are the same. */
   if (*regex == *word) {
