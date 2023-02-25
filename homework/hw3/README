@@ -1,0 +1,32 @@
+Edgar Robitaille
+erobita1
+
+This program contains c files hw3.c, functions.c, test_functions.c, a header file 
+functions.h, Makefile, gitlog.txt file, and README. 
+
+RUNNING THE CODE:
+One interesting thing about my code is that it ran smoothly on the terminal, but encountered issues when running on Visual Studio. I believe I may have some configuration error on VSCode, but still I ask you run this code through terminal. To run the code, please enter the following:
+gcc -o hw3 hw3.c functions.c -std=c99 -pedantic -Wall -Wextra
+./hw3 test_file_1.txt (OPTIONAL RESTRICTION FOR ~)
+
+When creating the Makefile to test my code using the test cases in test_functions.c, I added three new sections: test, test_functions.o, and functions.o to link the files and run them simultaneously. Visual Studio flagged an error, stating that my hw3.c file did not recognize the "match" or "read_file" functions. However, the tests ran without any issues through the terminal by typing "make test," or by running the files as mentioned above using the gcc command.
+
+hw3.c:
+This program contains the main file which facilitates the entire program. It mainly contains error catching to make sure the user does not input more than 3 arguments (./hw3 filename restriction), and calls the read_file program from functions.c to verify that the number of words and the first line in the file are valid. To grab the restriction, stdlib.h's atoi method is used to convert the string into a readable integer as stated in the gradescope instructions. After this, it sets up the user input portion (through stdin) for the regex and will prompt a user for the regex expression and will read the file created in test_functions.c. If there is no match found, it will output "No match found for regex expression ____" through stdout, where _____ is the user input. At the end, it closes the file. 
+
+functions.c: 
+This program contains two functions: read_file and match. read_file's purpose is to open the file which contains the number of words on the first line, followed by the words to be matched by the regex strings input by the user. I used many different error handling methods in this function such as making sure the file 
+was not null, and that the first number in the file was valid. This was a major challenge, as when I thought I had finished coding I realized that Gradescope indicated that a number on the first line of the file less than the number of words should return an error, while any number greater will read that number 'n' of words and will not cause an error. To successfully implement this, I created variable word_count to be the equal to the first line of the input file and used another while loop to iterate through the file and count the actual number of words new_count.From here, I compared the variables new_count and word_count and handled the cases according to the directions. For some reason, this while loop kept changing the output of the match functions, but I later realized this was due to the code ordering and forgetting to fseek the file back to the beginning.  From here, I returned the number of words and later make sure in hw3.c that the value word_count is non-zero to show that there was no error. The match function takes two strings "regex" and "word", and an integer "restriction" and returns whether or not the regex character matches the word. This was the hardest part of the entire coding aspect, figuring out how to implement this recursion. Essentially, the logic is all about iterating recursively through the word and regex to compare each and then cut off a letter and repeat and call itself, similar to the following: match(ca*t, caaat) -> match(a*t, aaat) -> etc. until the entire string has been taken care of. For the base case, the very end of each string was checked to see if both word and regex were empty (indicating one was a match), or if one was empty while the other was not (indicating not a match). This is the essential idea of this recursive implementation, however each character had a slight index deviation of each other based on its characteristics (* accounts for none, one, or many of the previous variable, ? as binary present or not, and ~ presence followed by the restriction). At first, I thought I had completely correctly implemented the ~ sign, but later realized it was not following the changed restrictions correctly, so I had to add a while loop to check if there were multiple ~ present, then changing the restriction accordingly. 
+
+
+test_functions.c:
+For test_functions, I tried to implement as many tests as I could while gathering a wide variety
+of tests to prove that my code works for many cases and not just the few single ones provided. 
+I chose to write the program this way to ensure the program is robust and can handle MANY different
+inputs and cases without breaking. I also included comments on each test case to explain what
+each test case is checking for, which will help others understand the cases I am looking to 
+test for in this code. 
+
+functions.h:
+I originally made changes to this file to include a function that could iterate through the user's string and check for any special regex characters (*, ?, ~) in order to test for cases without special characters. Initially, I compared each character to the non-regex string by iterating through them, but I later learned in office hours and on Gradescope that using loops instead of recursion was not the best approach, and I was likely to not come up with the correct answer this way. I eventually saw the WARNING on gradescope which highlighted this issue. Although I thought that adding functions would help with organizing the code, I realized that it was not necessary since the sub-functions were already implemented within each C file. The assignement requirements, in my opinion, could all be achieved within the scope of the provided c files. Note that test_read_files should create a file with the gradescope test cases called test_file_1.txt.
+
