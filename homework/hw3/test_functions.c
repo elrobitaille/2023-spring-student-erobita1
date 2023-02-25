@@ -60,6 +60,7 @@ void test_match_regex_question() {
 }
 
 void test_match_regex_tilde() {
+  /* Tilda cases with no special restriction. */
   assert(match("~", "aaaa", TEST_RESTRICTION_1) == 1);
   assert(match("~", "", TEST_RESTRICTION_1) == 1);
   assert(match("~", "a", TEST_RESTRICTION_1) == 1);
@@ -75,15 +76,24 @@ void test_match_regex_tilde() {
 }
 
 void test_match_regex_multiple() {
+  /* Multiple regex cases together in one string. */
   assert(match("!2*keK?ee?rCC?C*aP?E*eR*T*", "!2222keKerCCCaeRRRT",
                TEST_RESTRICTION_1) == 1);
   assert(match("!~2*keK?ee?rCC?C*aP?E*eR*T*", "!2222keKerCCCaeRRRT",
                TEST_RESTRICTION_1) == 1);
   assert(match("~abc", "sda12!$2", TEST_RESTRICTION_1) == 0);
   assert(match("~a~bc*d?", "sssa12bcccccc", TEST_RESTRICTION_1) == 1);
+  assert(match("He?llo~there~myfriend*", "Hllooooooothereeemyfrien", TEST_RESTRICTION_1) == 1);
+  assert(match("He?llo~there~myfriend*", "Hllooooooothereeeeeeeeeeemyfrien", TEST_RESTRICTION_1) == 0);
+  assert(match("amon?g ?us", "amogus", TEST_RESTRICTION_1) == 1);
+  assert(match("amo~n?g ?us", "amoooooogus", TEST_RESTRICTION_1) == 1);
+  assert(match("amo~n?g ?us", "amoooooooooooogus", TEST_RESTRICTION_1) == 0);
+  assert(match("~amo~n?g ?us", "aaaaaaamoooooooooooogus", TEST_RESTRICTION_1) == 0);
+  assert(match("~amo~n?g ?us", "aaaamoooooooogus", TEST_RESTRICTION_1) == 1);
 }
 
 void test_match_regex_tilde_restriction() {
+  /* Multiple tildas with restrictions tested*/
   assert(match("~~","intermediate", TEST_RESTRICTION_1) == 1);
   assert(match("~~","intermediate", TEST_RESTRICTION_2) == 0);
   assert(match("~~","intermediate", TEST_RESTRICTION_3) == 0);
@@ -92,6 +102,7 @@ void test_match_regex_tilde_restriction() {
 }
 
 int main() {
+  /* Calling all the tests with 'make test' to see if the code passes! */
   printf("Starting Tests...\n");
   test_read_files();
   test_match_regex();
