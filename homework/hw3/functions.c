@@ -12,6 +12,16 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
     return -1;
   }
 
+  /* Count the number of words without the first line character to compare to word_count. */
+  int new_count = 0;
+  char line;
+  while ((line = fgetc(fp)) != EOF) {
+    if (line == '\n') {
+      new_count++;
+    }
+  }
+  fseek(fp, 0, SEEK_SET); //Reset the file pointer back to the beginning. 
+  
   /* Check the number of words in the file, if not equal to 1, there is an error. */
   int word_count = 0;
   if (fscanf(fp, "%d", &word_count) != 1) {
@@ -23,6 +33,15 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
   if (word_count < 0 || word_count > size) {
     fprintf(stderr, "Error: Invalid word count\n");
     return -1;
+  }
+
+  /* If the first number is less than the number of words in the file, then call error and return -1. */
+  if (word_count < new_count) {
+    fprintf(stderr, "First line number is less than # of words in file. ");
+    return -1;
+  } else {
+    /* Set the word count to the number of actual words and continue finding the regex matches. */
+    word_count = new_count;
   }
 
   int i = 0;
@@ -38,24 +57,10 @@ int read_file(FILE *fp, char words[][MAX_WORD_SIZE + 1], int size) {
       return -1;
     }
     i++;
+    
   }
 
-  /* Code to check if first number in file is invalid and less than number of total words in file. */
-  int new_count = 0;
-  for (int i = 0; i < strlen(words); i++) {
-    if (words[i+1] != NULL && strcmp(words[i], "\n") != 0 && strcmp(words[i], "\0") != 0) {
-      new_count += 1;
-    }
-  }
 
-  /* If it is invalid, the number will be less than the number of words in the file. */
-  if (new_count < word_count) {
-    fprintf(stderr, "Error with first number in file\n");
-  }
-
-  printf("%d : %d", new_count, word_count);
-
-  
   return word_count;  /* Return the word count of the file, showing that read_file successfully ran. */
 
 }
@@ -119,5 +124,3 @@ int match(const char *regex, const char *word, int restriction) {
   
   return 0; // No match was reached, return 0. 
 }
-
-
