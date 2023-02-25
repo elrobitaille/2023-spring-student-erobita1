@@ -71,6 +71,18 @@ int match(const char *regex, const char *word, int restriction) {
       return (match(regex + 2, word, restriction)); 
     }
 
+  if (*regex == '~') {
+    for (int i = 0; i <= restriction; i++) {
+      if (match(regex + 1, word + i, restriction - i)) {
+        return 1;
+      }
+      if (word[i] == '\0') {
+        return 0;
+      }
+    }
+    return 0;
+  }
+
   /* If the words are equal, recursively call match to show that they are the same. */
   if (*regex == *word) {
     return match(regex+1, word+1, restriction);
