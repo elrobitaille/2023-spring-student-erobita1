@@ -32,6 +32,7 @@ void test_match_regex() {
   assert(match("abc", "bc", TEST_RESTRICTION_1) == 0);
   assert(match("aaaaaaa", "aaa", TEST_RESTRICTION_1) == 0);
   assert(match("aaa", "aaaaaaa", TEST_RESTRICTION_1) == 0);
+  assert(match("a", "a", TEST_RESTRICTION_1) == 1);
 }
 
 void test_match_regex_star() {
@@ -100,15 +101,21 @@ void test_match_regex_multiple() {
   assert(match("~a", "aaa", TEST_RESTRICTION_1) == 1);
   assert(match("a?a?a?a?a?a?a?aaa", "aaa", TEST_RESTRICTION_1) == 1);
   assert(match("a*", "aaa", TEST_RESTRICTION_1) == 1);
+  assert(match("a*", "aaab", TEST_RESTRICTION_1) == 0);
 }
 
 void test_match_regex_tilde_restriction() {
   /* Multiple tildas with restrictions tested*/
   assert(match("~~","intermediate", TEST_RESTRICTION_1) == 1);
   assert(match("~~","intermediate", TEST_RESTRICTION_2) == 0);
+  assert(match("~~","inte", TEST_RESTRICTION_2) == 1);
   assert(match("~~","intermediate", TEST_RESTRICTION_3) == 0);
+  assert(match("~~","intermedia", TEST_RESTRICTION_3) == 1);
   assert(match("~","intermediaintermediaintermedia", TEST_RESTRICTION_4) == 1);
   assert(match("~","intermediaintermediaintermediate", TEST_RESTRICTION_4) == 0);
+  assert(match("he~ll~o","hellllllllooooooo", TEST_RESTRICTION_4) == 1);
+  assert(match("a~", "abcdefghijklm", TEST_RESTRICTION_4) == 1);
+  assert(match("a~", "abcdef", TEST_RESTRICTION_3) == 1);
 }
 
 int main() {
