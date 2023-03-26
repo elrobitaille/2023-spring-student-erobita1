@@ -2,9 +2,14 @@
 // erobita1
 
 #include <iostream>
+#include <string> 
+#include <fstream>
 
 using std::cout;
+using std::cin;
 using std::endl;
+using std::string;
+using std::ifstream;
 
 int main(int argc, char *argv[]) {
     // Check the second command line argument and do the corresponding action to the letter, similar to the midterm project.
@@ -13,7 +18,13 @@ int main(int argc, char *argv[]) {
         return 1; 
     }
     
-    if (argc == 3) {
+    if (argc >= 2) {
+        ifstream file(argv[1]);
+        if (!file.is_open()) {
+            cout << "Invalid file list: " << argv[1] << endl;
+            return 1;
+        }
+
         switch (*argv[1]) {
             case 'a':
                 //handle_a_command();
