@@ -16,9 +16,9 @@ int handle_a_command(ifstream& input_file) {
         return 1;
     }
 
-    string file_line;
-    while (getline(input_file, file_line)) {
-        cout << file_line << endl;
+    string word;
+    while (input_file >> word) {
+      cout << word << endl;
     }
     
     return 0;
