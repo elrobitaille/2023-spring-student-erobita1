@@ -2,12 +2,25 @@
 // erobita1
 
 #include <iostream>
-#include "language_model.h"
+#include <string> 
+#include <fstream>
 
 using std::cout;
+using std::cin;
 using std::endl;
+using std::string;
+using std::ifstream;
 
-int handle_a_command(void) {
+int handle_a_command(string input_file) {
+    ifstream inner_file(input_file);
+    if (!inner_file.is_open()) {
+        return 1;
+    }
+
+    string line;
+    while (getline(inner_file, line)) {
+        cout << line << endl;
+    }
     
     return 0;
 }
