@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string> 
 #include <fstream>
+#include "language_model.h"
 
 using std::cout;
 using std::cin;
@@ -19,15 +20,15 @@ int main(int argc, char *argv[]) {
     }
     
     if (argc >= 2) {
-        ifstream file(argv[1]);
-        if (!file.is_open()) {
+        ifstream input_file(argv[1]);
+        if (!input_file.is_open()) {
             cout << "Invalid file list: " << argv[1] << endl;
             return 1;
         }
 
-        switch (*argv[1]) {
+        switch (*argv[2]) {
             case 'a':
-                //handle_a_command();
+                handle_a_command(input_file);
                 break;
             case 'd':
                 //handle_d_command();
@@ -41,8 +42,12 @@ int main(int argc, char *argv[]) {
             default: 
                 cout << "Invalid command: valid options are a, d, c, and f" << endl;
                 return 1;
-        }       
+        }      
+
+        input_file.close();
     }
+
+    
     
     return 0;
 }

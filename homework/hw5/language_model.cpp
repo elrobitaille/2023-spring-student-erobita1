@@ -11,15 +11,14 @@ using std::endl;
 using std::string;
 using std::ifstream;
 
-int handle_a_command(string input_file) {
-    ifstream inner_file(input_file);
-    if (!inner_file.is_open()) {
+int handle_a_command(ifstream& input_file) {
+    if (!input_file.is_open()) {
         return 1;
     }
 
-    string line;
-    while (getline(inner_file, line)) {
-        cout << line << endl;
+    string file_line;
+    while (getline(input_file, file_line)) {
+        cout << file_line << endl;
     }
     
     return 0;
