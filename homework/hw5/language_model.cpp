@@ -5,6 +5,7 @@
 #include <string> 
 #include <fstream>
 #include <unordered_map>
+#include <vector>
 
 using std::cout;
 using std::cin;
@@ -12,6 +13,7 @@ using std::endl;
 using std::string;
 using std::ifstream;
 using std::unordered_map;
+using std::cerr;
 
 unordered_map<string, int> find_frequencies(ifstream& input_file) {
     unordered_map<string, int> word_frequency;
@@ -20,7 +22,7 @@ unordered_map<string, int> find_frequencies(ifstream& input_file) {
     while (input_file >> word) {
         ifstream inner_file(word);
         if (!inner_file.is_open()) {
-            cout << "Invalid file: " << word << endl;
+            cerr << "Invalid file: " << word << endl;
         } 
 
         while (inner_file >> word) {
@@ -49,6 +51,10 @@ int handle_d_command(ifstream& input_file) {
         return 1;
     }
     
+    unordered_map<string, int> word_hashmap;
+
+    word_hashmap = find_frequencies(input_file);
+    
     return 0;
 }
 
@@ -56,6 +62,10 @@ int handle_c_command(ifstream& input_file) {
     if (!input_file.is_open()) {
         return 1;
     }
+
+    unordered_map<string, int> word_hashmap;
+
+    word_hashmap = find_frequencies(input_file);
     
     return 0;
 }
@@ -64,6 +74,10 @@ int handle_f_command(ifstream& input_file) {
     if (!input_file.is_open()) {
         return 1;
     }
+
+    unordered_map<string, int> word_hashmap;
+
+    word_hashmap = find_frequencies(input_file);
 
     return 0;
 }
