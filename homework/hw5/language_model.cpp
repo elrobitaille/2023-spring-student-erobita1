@@ -6,6 +6,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <vector>
+#include <algorithm>
 
 using std::cout;
 using std::cin;
@@ -13,6 +14,8 @@ using std::endl;
 using std::string;
 using std::ifstream;
 using std::unordered_map;
+using std::pair;
+using std::vector;
 using std::cerr;
 
 unordered_map<string, int> find_frequencies(ifstream& input_file) {
@@ -40,8 +43,15 @@ int handle_a_command(ifstream& input_file) {
     }
 
     unordered_map<string, int> word_hashmap;
-
     word_hashmap = find_frequencies(input_file);
+
+    vector<string> three_words;
+    string start1 = "<START_1>", start2 = "<START_2>";
+    string end1 = "<END_1>", end2 = "<END_2>";
+
+    three_words.push_back(start1);
+    three_words.push_back(start2);
+    
 
     return 0;
 }
