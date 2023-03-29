@@ -2,15 +2,14 @@
 // erobita1
 
 #include <string>
-using std::string;
-using std::ifstream;
-
+#include <unordered_map>
 #ifndef LANGUAGE_MODEL_H
 #define LANGUAGE_MODEL_H
 
-int handle_a_command(ifstream& input_file);
-int handle_d_command(void);
-int handle_c_command(void);
-int handle_f_command(void);
+std::unordered_map<std::string, int> find_frequencies(std::ifstream& input_file);
+int handle_a_command(std::ifstream& input_file);
+int handle_d_command(std::ifstream& input_file);
+int handle_c_command(std::ifstream& input_file);
+int handle_f_command(std::ifstream& input_file);
 
 #endif 

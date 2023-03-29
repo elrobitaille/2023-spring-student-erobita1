@@ -13,11 +13,7 @@ using std::string;
 using std::ifstream;
 using std::unordered_map;
 
-int handle_a_command(ifstream& input_file) {
-    if (!input_file.is_open()) {
-        return 1;
-    }
-
+unordered_map<string, int> find_frequencies(ifstream& input_file) {
     unordered_map<string, int> word_frequency;
 
     string word;
@@ -33,21 +29,41 @@ int handle_a_command(ifstream& input_file) {
 
         inner_file.close();
     }
+    return word_frequency;
+}
+
+int handle_a_command(ifstream& input_file) {
+    if (!input_file.is_open()) {
+        return 1;
+    }
+
+    unordered_map<string, int> word_hashmap;
+
+    word_hashmap = find_frequencies(input_file);
+
+    return 0;
+}
+
+int handle_d_command(ifstream& input_file) {
+    if (!input_file.is_open()) {
+        return 1;
+    }
     
     return 0;
 }
 
-int handle_d_command(void) {
+int handle_c_command(ifstream& input_file) {
+    if (!input_file.is_open()) {
+        return 1;
+    }
     
     return 0;
 }
 
-int handle_c_command(void) {
-    
-    return 0;
-}
+int handle_f_command(ifstream& input_file) {
+    if (!input_file.is_open()) {
+        return 1;
+    }
 
-int handle_f_command(void) {
-    
     return 0;
 }
