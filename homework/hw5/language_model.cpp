@@ -28,8 +28,18 @@ unordered_map<string, int> find_frequencies(ifstream& input_file) {
             cerr << "Invalid file: " << word << endl;
         } 
 
+        vector<string> three_words;
+        string start1 = "<START_1>", start2 = "<START_2>";
+        string end1 = "<END_1>", end2 = "<END_2>";
+
+        string prev_word1 = start1, prev_word2 = start2; 
+        string current_words;    
+
         while (inner_file >> word) {
-            word_frequency[word] += 1;
+            current_words = prev_word1 + " " + prev_word2 + " " + word;
+            word_frequency[current_words] += 1;
+            prev_word1 = prev_word2;
+            prev_word2 = word;
         }
 
         inner_file.close();
@@ -44,15 +54,7 @@ int handle_a_command(ifstream& input_file) {
 
     unordered_map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
-
-    vector<string> three_words;
-    string start1 = "<START_1>", start2 = "<START_2>";
-    string end1 = "<END_1>", end2 = "<END_2>";
-
-    three_words.push_back(start1);
-    three_words.push_back(start2);
     
-
     return 0;
 }
 
@@ -62,7 +64,6 @@ int handle_d_command(ifstream& input_file) {
     }
     
     unordered_map<string, int> word_hashmap;
-
     word_hashmap = find_frequencies(input_file);
     
     return 0;
