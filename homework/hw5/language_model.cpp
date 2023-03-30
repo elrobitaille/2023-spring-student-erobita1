@@ -42,6 +42,11 @@ unordered_map<string, int> find_frequencies(ifstream& input_file) {
             prev_word2 = word;
         }
 
+        current_words = prev_word1 + " " + prev_word2 + " " + end1;
+        word_frequency[current_words] += 1;
+        current_words = prev_word2 + " " + end1 + " " + end2;
+        word_frequency[current_words] += 1;
+
         inner_file.close();
     }
     return word_frequency;
@@ -54,7 +59,14 @@ int handle_a_command(ifstream& input_file) {
 
     unordered_map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
+
+    for (const auto& trigram : word_hashmap) {
+        cout << trigram.second << " - [" << trigram.first << "]" << endl;
+        //cout << trigram.first[0] << endl;
+    }
+
     
+
     return 0;
 }
 
@@ -75,8 +87,11 @@ int handle_c_command(ifstream& input_file) {
     }
 
     unordered_map<string, int> word_hashmap;
-
     word_hashmap = find_frequencies(input_file);
+
+    for (const auto& trigram : word_hashmap) {
+        cout << trigram.second << " - [" << trigram.first << "]" << endl;
+    }
     
     return 0;
 }
