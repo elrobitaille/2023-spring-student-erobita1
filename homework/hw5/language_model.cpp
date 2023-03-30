@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string> 
 #include <fstream>
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <algorithm>
 
@@ -13,13 +13,13 @@ using std::cin;
 using std::endl;
 using std::string;
 using std::ifstream;
-using std::unordered_map;
+using std::map;
 using std::pair;
 using std::vector;
 using std::cerr;
 
-unordered_map<string, int> find_frequencies(ifstream& input_file) {
-    unordered_map<string, int> word_frequency;
+map<string, int> find_frequencies(ifstream& input_file) {
+    map<string, int> word_frequency;
 
     string word;
     while (input_file >> word) {
@@ -57,15 +57,12 @@ int handle_a_command(ifstream& input_file) {
         return 1;
     }
 
-    unordered_map<string, int> word_hashmap;
+    map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
 
     for (const auto& trigram : word_hashmap) {
         cout << trigram.second << " - [" << trigram.first << "]" << endl;
-        //cout << trigram.first[0] << endl;
     }
-
-    
 
     return 0;
 }
@@ -75,7 +72,7 @@ int handle_d_command(ifstream& input_file) {
         return 1;
     }
     
-    unordered_map<string, int> word_hashmap;
+    map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
     
     return 0;
@@ -86,12 +83,8 @@ int handle_c_command(ifstream& input_file) {
         return 1;
     }
 
-    unordered_map<string, int> word_hashmap;
+    map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
-
-    for (const auto& trigram : word_hashmap) {
-        cout << trigram.second << " - [" << trigram.first << "]" << endl;
-    }
     
     return 0;
 }
@@ -101,8 +94,7 @@ int handle_f_command(ifstream& input_file) {
         return 1;
     }
 
-    unordered_map<string, int> word_hashmap;
-
+    map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
 
     return 0;

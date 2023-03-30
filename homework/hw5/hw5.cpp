@@ -5,6 +5,7 @@
 #include <string> 
 #include <fstream>
 #include <vector>
+#include <map>
 #include "language_model.h"
 
 
@@ -13,7 +14,8 @@ using std::cin;
 using std::endl;
 using std::string;
 using std::ifstream;
-using std::unordered_map;
+using std::map;
+using std::vector;
 using std::cerr;
 
 int main(int argc, char *argv[]) {
