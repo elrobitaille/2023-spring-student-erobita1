@@ -61,6 +61,13 @@ map<string, int> find_frequencies(ifstream& input_file) {
     return word_frequency; // Return the dictionary with appropriate frequencies. 
 }
 
+bool compare_trigrams(pair<string, int>& first_pair, pair<string, int>& second_pair) {
+    if (first_pair.second != second_pair.second) {
+        return first_pair.second > second_pair.second;
+    }
+    return true;
+}
+
 int handle_a_command(ifstream& input_file) {
     /* Make sure that the file is open and is valid. */
     if (!input_file.is_open()) {
@@ -105,12 +112,26 @@ int handle_d_command(ifstream& input_file) {
 }
 
 int handle_c_command(ifstream& input_file) {
+    /* Make sure that the file is open and is valid. */
     if (!input_file.is_open()) {
         return 1;
     }
 
+    /* Create a new hashmap and call find_frequencies function as a helper to get frequencies. */
     map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
+
+    vector<pair<string, int>> word_vector(word_hashmap.begin(), word_hashmap.end());
+
+    sort(word_vector.begin(), word_vector.end(), compare_trigrams);
+
+    /* Iterate through the hashmap and write in the format # - [WORD 1 WORD 2 WORD 3] in DESCENDING 
+       numerical order. Note that the dictionary has been sorted numerically so it will be based on 
+       frequency first, then go based on alphabetical order if they have the same frequency. This
+       is the same for loop from handle_a_command. */ 
+    for (const auto& trigram : word_vector) {
+       cout << trigram.second << " - [" << trigram.first << "]" << endl;
+    }
     
     return 0;
 }
