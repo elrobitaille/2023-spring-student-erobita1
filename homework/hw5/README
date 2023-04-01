@@ -1,7 +1,7 @@
 Edgar Robitaille
 erobita1 
 
-This is a C++ program that takes a text file as a command argument which contains  another text file on each line. The program will first open that main text file then iterate through each individual words inside the inner text files and start combining words into groups of three. These groups of three are called "trigrams", and the entirety of the different commands in this code works to sort the trigrams in different ways. 
+This is a C++ program that takes a text file as a command argument which contains another text file on each line. The program will first open that main text file then iterate through each individual words inside the inner text files and start combining words into groups of three. These groups of three are called "trigrams", and the entirety of the different commands in this code works to sort the trigrams in different ways. 
 
 The first function created was find_frequencies, which first opens the inner files to make sure they are able to be opened and valid. It also contains strings of special words <START> and <END> to be added to the trigrams at the beginning and end of each file text, respectively. This function utilizes a while loop and >> extraction operator to access one word at a time. At the end, this function returns a dictionary with frequencies of each trigram and acts as a helper function for every command function to avoid redundancy. One issue that was faced with this function was that it kept printing the special words at the end even if there was an error. To account for this, I added a print check print_placeholders that would become false if there was an error, which would then not print accordingly.
 
