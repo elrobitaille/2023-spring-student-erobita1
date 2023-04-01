@@ -7,7 +7,7 @@ DEBUGGING_FLAGS = -g -O0
 CFLAGS = $(CONSERVATIVE_FLAGS) $(DEBUGGING_FLAGS)
 
 # Compile all together
-all: hw5 test 
+all: hw5 test
 
 # Target to create the hw5 executable 
 hw5: hw5.o language_model.o
@@ -22,8 +22,8 @@ language_model.o: language_model.cpp language_model.h
 	$(CC) $(CFLAGS) -c language_model.cpp
 
 # Target to create the test executable
-test: model_tests.o language_model.o
-	$(CC) $(CFLAGS) -o test model_tests.o language_model.o
+model_tests: model_tests.o language_model.o
+	$(CC) $(CFLAGS) -o model_tests model_tests.o language_model.o
 
 # Compiles model_tests.cpp into an object file
 model_tests.o: model_tests.cpp model_tests.h language_model.h
