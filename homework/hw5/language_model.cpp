@@ -48,7 +48,6 @@ map<string, int> find_frequencies(ifstream& input_file) {
             prev_word2 = word;
         }
 
-
         /* Add the END_1 and END_2 portions to the end trigrams. */
         current_words = prev_word1 + " " + prev_word2 + " " + end1;
         word_frequency[current_words] += 1;
@@ -61,11 +60,18 @@ map<string, int> find_frequencies(ifstream& input_file) {
     return word_frequency; // Return the dictionary with appropriate frequencies. 
 }
 
-bool compare_trigrams(pair<string, int>& first_pair, pair<string, int>& second_pair) {
+bool compare_trigrams(const pair<string, int>& first_pair, const pair<string, int>& second_pair) {
+    /* Compare the frequencies of each pair. */
     if (first_pair.second != second_pair.second) {
         return first_pair.second > second_pair.second;
+    /* If frequencies are the same then compare based on alphabetical order. */
+    } else if (first_pair.first != second_pair.first) {
+        return first_pair.first < second_pair.first;
+    /* If frequencies and the pairs are the same, return false. */
+    } else if (first_pair.second == second_pair.second && first_pair.first == second_pair.first) {
+        return false;   
     }
-    return true;
+    return true; // If no conditions are met 
 }
 
 int handle_a_command(ifstream& input_file) {
@@ -77,7 +83,6 @@ int handle_a_command(ifstream& input_file) {
     /* Create a new hashmap and call find_frequencies function as a helper to get frequencies. */
     map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
-
 
     /* Iterate through the hashmap and write in the format # - [WORD 1 WORD 2 WORD 3] in ASCENDING order.
        Note that this is based on the ASCII of the first word, then goes through second and third words
@@ -121,8 +126,11 @@ int handle_c_command(ifstream& input_file) {
     map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
 
+    /* Create a vector that contains a word pair, iterates from beginning to end of hashmap. */
     vector<pair<string, int>> word_vector(word_hashmap.begin(), word_hashmap.end());
 
+    /* Uses sort function and compare_trigrams helper function to sort the list by descending numbers and
+       then alphabetical order if the frequency is the same value. */
     sort(word_vector.begin(), word_vector.end(), compare_trigrams);
 
     /* Iterate through the hashmap and write in the format # - [WORD 1 WORD 2 WORD 3] in DESCENDING 
@@ -137,10 +145,12 @@ int handle_c_command(ifstream& input_file) {
 }
 
 int handle_f_command(ifstream& input_file) {
+    /* Make sure that the file is open and is valid. */
     if (!input_file.is_open()) {
         return 1;
     }
 
+    /* Create a new hashmap and call find_frequencies function as a helper to get frequencies. */
     map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
 
