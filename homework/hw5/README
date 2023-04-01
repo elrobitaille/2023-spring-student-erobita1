@@ -18,7 +18,7 @@ To run the program:
 
 make all (Runs all the following):
    - make hw5 (To run language_model.cpp)
-   - make test (For testing purposes)
+   - make test (For testing purposes in model_tests.cpp)
 
 Then, run the following with corresponding sorting command: 
 ./hw5 [input_file.txt] 'command'
