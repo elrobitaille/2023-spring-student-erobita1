@@ -1,0 +1,30 @@
+Edgar Robitaille
+erobita1 
+
+This is a C++ program that takes a text file as a command argument which contains  another text file on each line. The program will first open that main text file then iterate through each individual words inside the inner text files and start combining words into groups of three. These groups of three are called "trigrams", and the entirety of the different commands in this code works to sort the trigrams in different ways. 
+
+The first function created was find_frequencies, which first opens the inner files to make sure they are able to be opened and valid. It also contains strings of special words <START> and <END> to be added to the trigrams at the beginning and end of each file text, respectively. This function utilizes a while loop and >> extraction operator to access one word at a time. At the end, this function returns a dictionary with frequencies of each trigram and acts as a helper function for every command function to avoid redundancy. One issue that was faced with this function was that it kept printing the special words at the end even if there was an error. To account for this, I added a print check print_placeholders that would become false if there was an error, which would then not print accordingly.
+
+handle_a_command first checks that the file is valid, then calls upon the find_frequencies function to create the trigrams dictionary/map. From here, this function was very simple. I just had to iterate through this dictionary and put it in the correct format as required by the homework. Note that this function uses the <map> library to order the dictionary keys automatically. At first, I used the <unordered_map> library and was unsure how to order the dictionary. Looking into the issue further, I realized that it was as simple as using a different library, and realizing that <unordered_map> did not guarantee any ordering of keys.
+
+handle_d_command is pretty similar to handle_a_command except that it prints in descending alphabetical order instead of ascending. This function uses reverse iterators in the std::map container to reverse iterate through the sorted frequency dictionary. More specifically, this function utilizes rbegin() and rend() to reverse iterate through std::map container. rbegin() is pointer to the last element of the container, and rend() for the first element. This allows movement in the opposite direction of handle_a_command. 
+
+handle_c_command creates a pair of vectors word_vector, which has elements from beginning to end of the frequency dictionary from find_frequencies. The vector is later sorted with the sort function and uses compare_trigrams as a helper function. Simply put, this helper function arranges elements by descending numerical order, but if they are of the same frequency, it will sort based on alphabetical order. Then, the function finally uses the same for loop as was used in handle_a_command, and iterates through the dictionary and prints the corresponding results. 
+
+handle_f_command first creates a combined_string by putting together the user input words to be searched for through the trigram dictionary. It first checks whether the combined_string matches any trigram in the dictionary by using the .find method. When a match is found, it compares the frequency with the current trigram and sorts alphabetically if the frequency is the same. From here, it updates the frequency and trigram accordingly to be printed to cout. If there is no match, there is output to cout indicating no trigram match was found.
+
+
+To run the program:
+
+make hw5
+
+./hw5 [input_file.txt] 'command'
+
+NOTE THAT input_file.txt contains lines of other text files to be iterated through. 
+Valid 'command' include: 
+'a' (ascending alphabetical order)
+'d' (descending alphabetical order)
+'c' (descending numerical order)
+'f' (search feature)
+
+
