@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <utility>
 
 using std::cout;
 using std::cin;
@@ -27,8 +28,10 @@ map<string, int> find_frequencies(ifstream& input_file) {
     string word;
     while (input_file >> word) {
         /* Create a new file stream for the inner files and make sure that the file is open and valid. */
+        int print_placeholders = 1; // Decides whether or not <START> and <END> placeholders are printed. 
         ifstream inner_file(word);
         if (!inner_file.is_open()) {
+            print_placeholders = 0;
             cerr << "Invalid file: " << word << endl;
         } 
 
@@ -37,23 +40,27 @@ map<string, int> find_frequencies(ifstream& input_file) {
         string end1 = "<END_1>", end2 = "<END_2>";
 
         /* Set the starter words as the START_1 and START_2 strings. */
-        string prev_word1 = start1, prev_word2 = start2; 
-        string current_words;    
+        if (print_placeholders) { // Checks if print is necessary for <START> and <END>. 
+            string prev_word1 = start1, prev_word2 = start2; 
+            string current_words;    
 
-        /* Iterate through the dictionary and update the frequencies as well as the contained words. */
-        while (inner_file >> word) {
-            current_words = prev_word1 + " " + prev_word2 + " " + word;
-            word_frequency[current_words] += 1;
-            prev_word1 = prev_word2;
-            prev_word2 = word;
+            /* Iterate through the dictionary and update the frequencies as well as the contained words. */
+            while (inner_file >> word) {
+                current_words = prev_word1 + " " + prev_word2 + " " + word;
+                word_frequency[current_words] += 1;
+                prev_word1 = prev_word2;
+                prev_word2 = word;
+            }
+
+            /* Add the END_1 and END_2 portions to the end trigrams. */
+            if (print_placeholders) {
+                current_words = prev_word1 + " " + prev_word2 + " " + end1;
+                word_frequency[current_words] += 1;
+                current_words = prev_word2 + " " + end1 + " " + end2;
+                word_frequency[current_words] += 1;
+            }
         }
-
-        /* Add the END_1 and END_2 portions to the end trigrams. */
-        current_words = prev_word1 + " " + prev_word2 + " " + end1;
-        word_frequency[current_words] += 1;
-        current_words = prev_word2 + " " + end1 + " " + end2;
-        word_frequency[current_words] += 1;
-
+        
         inner_file.close();
     }
 
@@ -138,13 +145,13 @@ int handle_c_command(ifstream& input_file) {
        frequency first, then go based on alphabetical order if they have the same frequency. This
        is the same for loop from handle_a_command. */ 
     for (const auto& trigram : word_vector) {
-       cout << trigram.second << " - [" << trigram.first << "]" << endl;
+       cout << trigram.second << " - [" << trigram.first << "]" << endl; 
     }
     
     return 0;
 }
 
-int handle_f_command(ifstream& input_file) {
+int handle_f_command(ifstream& input_file, const string& first_word, const string& second_word) {
     /* Make sure that the file is open and is valid. */
     if (!input_file.is_open()) {
         return 1;
@@ -153,6 +160,17 @@ int handle_f_command(ifstream& input_file) {
     /* Create a new hashmap and call find_frequencies function as a helper to get frequencies. */
     map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
+
+    string combined_string = first_word + " " + second_word;
+    int freq_num = 0;
+    string result_trigram; 
+
+    
+    if (!result_trigram.empty()) {
+        cout << freq_num << " - [" << result_trigram << "]" << endl; 
+    } else {
+        cout << "No trigrams of the form [" << first_word << " " << second_word << " ?]" << endl;
+    }
 
     return 0;
 }
