@@ -165,7 +165,16 @@ int handle_f_command(ifstream& input_file, const string& first_word, const strin
     int freq_num = 0;
     string result_trigram; 
 
-    
+    for (const auto& trigram : word_hashmap) {
+        if (trigram.first.find(combined_string) == 0) { 
+            if (freq_num < trigram.second || (freq_num == trigram.second && trigram.first < result_trigram)) {
+                freq_num = trigram.second;
+                result_trigram = trigram.first;
+            }
+        }
+    }
+
+    /* Format outputting matched trigram or lack of a matched trigram. */
     if (!result_trigram.empty()) {
         cout << freq_num << " - [" << result_trigram << "]" << endl; 
     } else {
