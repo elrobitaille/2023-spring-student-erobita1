@@ -53,12 +53,11 @@ map<string, int> find_frequencies(ifstream& input_file) {
             }
 
             /* Add the END_1 and END_2 portions to the end trigrams. */
-            if (print_placeholders) {
-                current_words = prev_word1 + " " + prev_word2 + " " + end1;
-                word_frequency[current_words] += 1;
-                current_words = prev_word2 + " " + end1 + " " + end2;
-                word_frequency[current_words] += 1;
-            }
+            current_words = prev_word1 + " " + prev_word2 + " " + end1;
+            word_frequency[current_words] += 1;
+            current_words = prev_word2 + " " + end1 + " " + end2;
+            word_frequency[current_words] += 1;
+            
         }
         
         inner_file.close();
@@ -161,13 +160,19 @@ int handle_f_command(ifstream& input_file, const string& first_word, const strin
     map<string, int> word_hashmap;
     word_hashmap = find_frequencies(input_file);
 
+    /* String for first two trigram sequence, the matched trigram, and its frequency. */
     string combined_string = first_word + " " + second_word;
     int freq_num = 0;
     string result_trigram; 
 
     for (const auto& trigram : word_hashmap) {
+        /* Check first if the string matches the searched string (combined strings of first and second word). */
         if (trigram.first.find(combined_string) == 0) { 
+            // Check if the frequency of the trigram is greater or alphabetical ordering. 
             if (freq_num < trigram.second || (freq_num == trigram.second && trigram.first < result_trigram)) {
+                /* Update the frequency freq_num with the current trigram's  
+                   frequency and update result_trigram with the updated current 
+                   trigram. */ 
                 freq_num = trigram.second;
                 result_trigram = trigram.first;
             }
