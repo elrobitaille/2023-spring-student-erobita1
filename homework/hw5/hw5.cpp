@@ -8,7 +8,6 @@
 #include <map>
 #include "language_model.h"
 
-
 using std::cout;
 using std::cin;
 using std::endl;
@@ -34,7 +33,8 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-        // Switch case to account for each command type and make sure command char is valid. 
+        /* Switch case to account for each command type and make sure command char is valid. 
+           For each letter case, call the corresponding letter function. */ 
         switch (*argv[2]) {
             case 'a':
                 handle_a_command(input_file);
@@ -46,21 +46,20 @@ int main(int argc, char *argv[]) {
                 handle_c_command(input_file);
                 break;
             case 'f':
+                /* When f command is called, make sure there are the two additional command-line arguments attached.*/
                 if (!argv[3] || !argv[4]) {
                     cerr << "Invalid argument list: f requires two additional command-line arguments" << endl;
                     return 1; 
                 }
-                handle_f_command(input_file);
+                handle_f_command(input_file, argv[3], argv[4]);
                 break;
             default: 
                 cerr << "Invalid command: valid options are a, d, c, and f" << endl;
                 return 1;
         }      
 
-        input_file.close();
+        input_file.close(); // Close the file
     }
 
-    
-    
     return 0;
 }
