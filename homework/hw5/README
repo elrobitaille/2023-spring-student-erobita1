@@ -16,8 +16,11 @@ handle_f_command first creates a combined_string by putting together the user in
 
 To run the program:
 
-make hw5
+make all (Runs all the following):
+   - make hw5 (To run language_model.cpp)
+   - make test (For testing purposes)
 
+Then, run the following with corresponding sorting command: 
 ./hw5 [input_file.txt] 'command'
 
 NOTE THAT input_file.txt contains lines of other text files to be iterated through. 
@@ -27,4 +30,6 @@ Valid 'command' include:
 'c' (descending numerical order)
 'f' (search feature)
 
+To clean:
+    - make clean
 
