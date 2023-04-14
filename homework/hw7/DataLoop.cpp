@@ -65,6 +65,7 @@ DataLoop::~DataLoop() {
     }
 }
 
+/* Overloads the = operator to assign rhs DataLoop to current DataLoop. */
 DataLoop & DataLoop::operator=(const DataLoop & rhs) {
     // First check if there is self assigment involved. 
     if (this == &rhs) {
@@ -83,20 +84,24 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
         }
     }
     
+    // Assigns count to rhs count, then if zero sets to null and returns.
     count = rhs.count; 
     if (rhs.count == 0) {
         start = nullptr;
         return *this;
     }
 
+    // Creates a new node with null pointers and sets them accordingly.
     start = new _Node{rhs.start->data, nullptr, nullptr};
     start->next = start;
     start->prev = start;
 
+    // Then, initialize the pointers.
     _Node *current = rhs.start->next;
     _Node *newNode = nullptr;
     _Node *prevNode = start;
 
+    // Iterate through the nodes and update accordingly.
     while (current != rhs.start) {
         newNode = new _Node{current->data, prevNode, nullptr};
         prevNode->next = newNode;
@@ -104,6 +109,7 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
         prevNode = newNode;
     }
 
+    // Update last new node pointer to new start node and new start.
     prevNode->next = start;
     start->prev = prevNode;
 
@@ -121,12 +127,30 @@ bool DataLoop::operator==(const DataLoop & rhs) const {
         return true;
     }
 
+    _Node *current = start;
+    _Node *rhs_current = rhs.start;
+    for (size_t i = 0; i < count; ++i) {
+        // If the data is not equal, then objects aren't equal, so return false.
+        if (current->data != rhs_current->data) {
+            return false;
+        }
+        current = current->next;
+        rhs_current = rhs_current->next;
+    }
+
     return true; // All nodes are equal, return true. 
 
 }
 
 DataLoop & DataLoop::operator+=(const int & num) {
+    _Node *newNode = new _Node({num, nullptr, nullptr});
+    if (count == 0) {
+        start = newNode;
+        start->next = start;
+        start->prev = start;
+    }
 
+    return *this;
 }
 
 DataLoop DataLoop::operator+(const DataLoop & rhs) const {
