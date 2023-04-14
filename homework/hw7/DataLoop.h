@@ -121,7 +121,7 @@ public:
    *
    * \return The number of nodes
    */
-  int length() const { return count; }  // TODO
+  int length() const { return count; }  
 
 
   /**
