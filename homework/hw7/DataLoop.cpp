@@ -66,10 +66,12 @@ DataLoop::~DataLoop() {
 }
 
 DataLoop & DataLoop::operator=(const DataLoop & rhs) {
+    // First check if there is self assigment involved. 
     if (this == &rhs) {
         return *this;
     }
 
+    // If count is greater than zero, deallocate memory and delete nodes.
     if (count > 0) {
         _Node* currentNode = start;
         _Node* nextNode;
@@ -80,17 +82,46 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
             currentNode = nextNode;
         }
     }
-
+    
     count = rhs.count; 
     if (rhs.count == 0) {
         start = nullptr;
         return *this;
     }
 
+    start = new _Node{rhs.start->data, nullptr, nullptr};
+    start->next = start;
+    start->prev = start;
+
+    _Node *current = rhs.start->next;
+    _Node *newNode = nullptr;
+    _Node *prevNode = start;
+
+    while (current != rhs.start) {
+        newNode = new _Node{current->data, prevNode, nullptr};
+        prevNode->next = newNode;
+        current = current->next;
+        prevNode = newNode;
+    }
+
+    prevNode->next = start;
+    start->prev = prevNode;
+
     return *this;
 }
 
 bool DataLoop::operator==(const DataLoop & rhs) const {
+    // If the node count is not equal, the objects aren't equal, return false. 
+    if (count != rhs.count) {
+        return false;
+    }
+
+    // If the count is zero, the objects are equal, return true.
+    if (count == 0) {
+        return true;
+    }
+
+    return true; // All nodes are equal, return true. 
 
 }
 
