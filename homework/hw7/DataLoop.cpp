@@ -88,12 +88,19 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
             delete currentNode;
             currentNode = nextNode;
         }
+        start = nullptr;
+        count = 0;
     }
     
-    // Assigns count to rhs count, then if zero sets to null and returns.
-    count = rhs.count; 
+    // If rhs count is zero then creates empty DataLoop object.
     if (rhs.count == 0) {
         start = nullptr;
+        return *this;
+    }
+
+    if (rhs.count == 0) {
+        start = nullptr;
+        count = 0;
         return *this;
     }
 
@@ -118,6 +125,8 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
     // Update last new node pointer to new start node and new start.
     prevNode->next = start;
     start->prev = prevNode;
+
+    count = rhs.count;
 
     return *this;
 }
