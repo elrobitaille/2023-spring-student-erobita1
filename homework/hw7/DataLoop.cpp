@@ -163,45 +163,59 @@ DataLoop & DataLoop::operator+=(const int & num) {
     return *this;
 }
 
+/* Overload the + operator to add DataLoop objects together. */
 DataLoop DataLoop::operator+(const DataLoop & rhs) const {
+    // Create a copy of current object. 
     DataLoop current_copy(*this);
 
+    // If rhs count zero, this means no change, so return current_copy.
     if (rhs.count == 0) {
         return current_copy;
     }
 
+    // If count is zero, also indicates no change, so return rhs.
     if (count == 0) {
         return rhs;
     }
 
+    // Create a new node, then throughout the loop, add the data to the new node.
     _Node* current = rhs.start;
     for (size_t i = 0; i < rhs.count; ++i) {
         current_copy += current->data;
         current = current->next;
     }
 
-    return current_copy;
+    return current_copy; // Return new DataLoop object.
 
 }
 
+// Overload the ^ operator to shift the list by the offset.
 DataLoop & DataLoop::operator^(int offset) {
+    // Return the object when count is zero or one, indicating no change.
     if (count <= 1) {
         return *this;
     }
 
+    // If offset is negative add to count and make it positive. 
     offset = offset % count;
     if (offset < 0) {
         offset += count;
     }
 
+    // Iterate through the list and update start pointer.
     for (int i = 0; i < offset; ++i) {
         start = start->next;
     }
 
-    return *this;
+    return *this; // Return the object. 
 
 }
 
 DataLoop & DataLoop::splice(DataLoop & rhs, size_t pos) {
     
 }   
+
+
+std::ostream & operator<<(std::ostream & os, const DataLoop & dl) {
+
+}
