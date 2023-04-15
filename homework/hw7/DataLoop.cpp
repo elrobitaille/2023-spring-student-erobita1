@@ -227,11 +227,36 @@ DataLoop & DataLoop::operator^(int offset) {
 
 }
 
-DataLoop & DataLoop::splice(DataLoop & rhs, size_t pos) {
+DataLoop& DataLoop::splice(DataLoop& rhs, size_t pos) {
     if (rhs.count == 0) {
         return *this;
     }
 
+    if (pos >= count) {
+        pos %= count;
+    }
+
+    if (pos == 0) {
+        start->prev->next = rhs.start;
+        rhs.start->prev->next = start;
+        DataLoop::_Node* temp = start->prev;
+        start->prev = rhs.start->prev;
+        rhs.start->prev = temp;
+        start = rhs.start;
+    } else {
+        DataLoop::_Node* current = start;
+        for (size_t i = 1; i < pos; ++i) {
+            current = current->next;
+        }
+        rhs.start->prev->next = current->next;
+        current->next->prev = rhs.start->prev;
+        rhs.start->prev = current;
+        current->next = rhs.start;
+    }
+
+    count += rhs.count;
+    rhs.start = nullptr;
+    rhs.count = 0;
     return *this;
 }
 
