@@ -231,7 +231,15 @@ std::ostream & operator<<(std::ostream & os, const DataLoop & dl) {
     } else {
         os << "-> " << dl.start->data;
 
+        DataLoop::_Node *current = dl.start->next;
+        while (current != dl.start) {
+            os << " <-> " << current->data;
+            current = current->next;
+        }
+
         os << " <-";
     }
+
+    return os;
     
 }
