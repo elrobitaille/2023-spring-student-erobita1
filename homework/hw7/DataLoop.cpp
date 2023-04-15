@@ -79,7 +79,7 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
     }
 
     // If count is greater than zero, deallocate memory and delete nodes.
-    if (count > 0) {
+    if (count > 0 && start != nullptr) {
         _Node* currentNode = start;
         _Node* nextNode;
 
@@ -96,13 +96,7 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
     if (rhs.count == 0) {
         start = nullptr;
         return *this;
-    }
-
-    if (rhs.count == 0) {
-        start = nullptr;
-        count = 0;
-        return *this;
-    }
+    }   
 
     // Creates a new node with null pointers and sets them accordingly.
     start = new _Node{rhs.start->data, nullptr, nullptr};
@@ -123,8 +117,9 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
     }
 
     // Update last new node pointer to new start node and new start.
-    prevNode->next = start;
-    start->prev = prevNode;
+    newNode->next = start;
+    newNode->prev = start->prev; 
+    start->prev = newNode;
 
     count = rhs.count;
 
