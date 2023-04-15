@@ -112,7 +112,7 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
     while (current != rhs.start) {
         newNode = new _Node{current->data, prevNode, nullptr};
         prevNode->next = newNode;
-        current = current->next;
+        current = current->next;    
         prevNode = newNode;
     }
 
@@ -232,34 +232,26 @@ DataLoop & DataLoop::splice(DataLoop & rhs, size_t pos) {
         return *this;
     }
 
-    if (count == 0) {
-        *this = rhs;
-        rhs.start = nullptr;
-        rhs.count = 0;
-        return *this;
-    }
-
-
     return *this;
-}   
+}
 
-
+/* Overloads the << operator to print DataLoop object to ostream. */
 std::ostream & operator<<(std::ostream & os, const DataLoop & dl) {
+    // If count is zero, print >no values<.
     if (dl.count == 0) {
         os << ">no values<";
+    // Otherwise, just print data in the list and start with -> and first data point.
     } else {
         os << "-> " << dl.start->data << " ";
-
+        // Iterate through nodes and print data points <--> in between.
         DataLoop::_Node *current = dl.start->next;
         while (current != dl.start) {
             os << "<--> " << current->data << " ";
             current = current->next;
         }
-
-        os << "<-";
-
+        os << "<-"; // Print last arrow <- .
     }
 
-    return os;
+    return os; // Return ostream object.
     
 }
