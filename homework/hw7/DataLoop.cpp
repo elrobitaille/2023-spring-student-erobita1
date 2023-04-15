@@ -206,15 +206,21 @@ DataLoop & DataLoop::operator^(int offset) {
         return *this;
     }
 
-    // If offset is negative add to count and make it positive. 
-    offset = offset % count;
-    if (offset < 0) {
-        offset += count;
+    // If offset is negative, make it positive.
+    // Determines if it is faster to go forward or backward through the list.
+    int direction = 1;
+    if (offset > count / 2) {
+        direction = -1;
+        offset = count - offset;
     }
 
-    // Iterate through the list and update start pointer.
+    // Iterates through list and updates the start's pointer based on the direction.
     for (int i = 0; i < offset; ++i) {
-        start = start->next;
+        if (direction == 1) {
+            start = start->next;
+        } else {
+            start = start->prev;
+        }
     }
 
     return *this; // Return the object. 
