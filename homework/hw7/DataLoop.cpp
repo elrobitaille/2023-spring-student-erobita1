@@ -148,6 +148,11 @@ DataLoop & DataLoop::operator+=(const int & num) {
         start = newNode;
         start->next = start;
         start->prev = start;
+    } else {
+        newNode->next = start;
+        newNode->prev = start->prev;
+        start->prev->next = newNode;
+        start->prev = newNode;
     }
 
     return *this;
