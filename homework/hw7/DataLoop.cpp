@@ -142,12 +142,15 @@ bool DataLoop::operator==(const DataLoop & rhs) const {
 
 }
 
+/* Overloads the += operator to add a new node to the end of the list. */
 DataLoop & DataLoop::operator+=(const int & num) {
+    // Create a new node with null pointers, then set next and prev pointers if count is zero.
     _Node *newNode = new _Node({num, nullptr, nullptr});
     if (count == 0) {
         start = newNode;
         start->next = start;
         start->prev = start;
+    // Else if the count is non-zero, insert the new node at the end of the list.
     } else {
         newNode->next = start;
         newNode->prev = start->prev;
@@ -155,10 +158,23 @@ DataLoop & DataLoop::operator+=(const int & num) {
         start->prev = newNode;
     }
 
+    count += 1; // Increment count.  
+
     return *this;
 }
 
 DataLoop DataLoop::operator+(const DataLoop & rhs) const {
+    DataLoop current_copy(*this);
+
+    if (rhs.count == 0) {
+        return current_copy;
+    }
+
+    if (count == 0) {
+        return rhs;
+    }
+
+    return current_copy;
 
 }
 
