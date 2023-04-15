@@ -52,12 +52,69 @@ public:
     */
     TDataLoop & operator=(const TDataLoop<DataType> & rhs);
 
+   /**
+    * \brief The destructor
+    *
+    * \detail The destructor releases allocated memory as needed to avoid leaks.
+    */
     ~TDataLoop();
 
+   /**
+    * \brief Overloaded operator== to check if two TDataLoops are the same
+    *
+    * \detail This operator compares the current TDataLoop (*this) with the input TDataLoop (rhs). It returns true if both TDataLoops are the same node by node, including the starting position and count. Otherwise, it returns false.
+    *
+    * \param[in] rhs A constant reference to a TDataLoop object to compare
+    *
+    * \return true if two TDataLoops are the same node by node, else false
+    */
     bool operator==(const TDataLoop<DataType> & rhs) const;
+
+
+   /**
+    * \brief Overloaded operator+= to add a value to the end of this TDataloop
+    *
+    * \detail This operator takes an template, creates a new _Node to hold it, and inserts that at the end of this TDataloop. In other words, the new node will be immediately before the start node, but the start is not changed. 
+    *
+    * \param[in] data A constant reference to a template value
+    *
+    * \return A reference to this updated TDataLoop object with the new value added
+    */
     TDataLoop & operator+=(const DataType & data);
+
+   /**
+    * \brief Overloaded operator+ to concatenate copies of two TDataLoops
+    *
+    * \detail This operator creates a third TDataLoop by concatenating copies of the current TDataLoop (*this) and the parameter TDataLoop (rhs), adding the rhs copy to the end of the current TDataLoop copy. The start position for the new TDataLoop should mimic the start of *this and the count should be updated as well. [Note that the original TDataLoops are not affected.]
+    *
+    * \param[in] rhs A constant reference to a TDataLoop object to add to the end of *this
+    *
+    * \return A new TDataLoop object with the concatenated result
+    */
     TDataLoop operator+(const TDataLoop<DataType> & rhs) const;
+
+   /**
+    * \brief Overloaded operator^ to shift the start position in *this TDataLoop according to the parameter offset - forward for a positive value and backward for a negative value
+    *
+    * \detail This overloaded operator takes an integer and shifts the starting position forward (positive num) or backward (negative num) that many nodes, looping around as much as necessary. [A 0 offset does not make any changes, and no changes are made to an empty TDataLoop or one with only one _Node.]
+    *
+    * \param[in] offset The number of nodes/positions to move the start position, positive for forward shifting, negative for backward motion
+    *
+    * \return A reference to the updated TDataLoop object
+    */
     TDataLoop & operator^(int offset);
+
+   /**
+    * \brief Function splice to insert an entire TDataLoop into this one
+    *
+    * \detail This function inserts the entire parameter TDataLoop (rhs) into the current TDataLoop (*this) at the indicated position (pos), where 0 would indicate the starting position of the current TDataLoop and update `start` accordingly. An insert position of n would indicate that the start node of rhs comes after node n in the current TDataLoop (assuming you start counting nodes with 1). The values from the input TDataLoop (rhs) should be inserted in their current order, beginning with that object's starting node. The count for the current TDataLoop should be updated. If the indicated position is larger than the current count, effectively loop around as much as necessary to get to the indicated spot. This function must also reset the parameter TDataLoop, making rhs an empty list, since both can't co-exist.
+    *
+    * \param[in] rhs A reference to a TDataLoop object to insert into *this
+    *
+    * \param[in] pos The insertion position 
+    *
+    * \return A reference to the updated TDataLoop object 
+    */
     TDataLoop & splice(TDataLoop<DataType> & rhs, size_t pos);
     
    /**
@@ -81,7 +138,7 @@ public:
     *
     * \return A reference to the output stream object
     */
-    friend std::ostream & operator<<(std::ostream & os, const TDataLoop<DataType> & dl)
+    friend std::ostream & operator<<(std::ostream & os, const TDataLoop<DataType> & dl);
 
 private:
   // friend TDataLoopTest struct to allow the test struct access to the private data
@@ -92,7 +149,7 @@ private:
    * \brief A private structure to represent a node in a DataLoop
    */
   struct _Node {
-    int data;     ///< Integer node data
+    DataType data;     ///< Integer node data
     _Node *next;  ///< A pointer to the next node
     _Node *prev;  ///< A pointer to the previous node
   };
