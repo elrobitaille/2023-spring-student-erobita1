@@ -245,17 +245,18 @@ DataLoop & DataLoop::splice(DataLoop & rhs, size_t pos) {
 
 std::ostream & operator<<(std::ostream & os, const DataLoop & dl) {
     if (dl.count == 0) {
-        os << "no values";
+        os << ">no values<";
     } else {
-        os << "-> " << dl.start->data;
+        os << "-> " << dl.start->data << " ";
 
         DataLoop::_Node *current = dl.start->next;
         while (current != dl.start) {
-            os << " <-> " << current->data;
+            os << "<--> " << current->data << " ";
             current = current->next;
         }
 
-        os << " <-";
+        os << "<-";
+
     }
 
     return os;
