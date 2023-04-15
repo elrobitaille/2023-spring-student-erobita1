@@ -174,14 +174,34 @@ DataLoop DataLoop::operator+(const DataLoop & rhs) const {
         return rhs;
     }
 
+    _Node* current = rhs.start;
+    for (size_t i = 0; i < rhs.count; ++i) {
+        current_copy += current->data;
+        current = current->next;
+    }
+
     return current_copy;
 
 }
 
 DataLoop & DataLoop::operator^(int offset) {
+    if (count <= 1) {
+        return *this;
+    }
+
+    offset = offset % count;
+    if (offset < 0) {
+        offset += count;
+    }
+
+    for (int i = 0; i < offset; ++i) {
+        start = start->next;
+    }
+
+    return *this;
 
 }
 
 DataLoop & DataLoop::splice(DataLoop & rhs, size_t pos) {
     
-}
+}   
