@@ -78,54 +78,20 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
         return *this;
     }
 
-    // If count is greater than zero, deallocate memory and delete nodes.
-    if (count > 0 && start != nullptr) {
-        _Node* currentNode = start;
-        _Node* nextNode;
-
-        for (size_t i = 0; i < count; ++i) {
-            nextNode = currentNode->next;
-            delete currentNode;
-            currentNode = nextNode;
-        }
-        start = nullptr;
-        count = 0;
+    while (count > 0 && start != nullptr) {
+        _Node *temp = start;
+        start->prev->next = nullptr;
+        start = start->next;
+        delete temp;
+        count--;
     }
     
-    // If rhs count is zero then creates empty DataLoop object.
-    if (rhs.count == 0) {
-        start = nullptr;
-        return *this;
-    }   
-
-    // Creates a new node with null pointers and sets them accordingly.
-    start = new _Node{rhs.start->data, nullptr, nullptr};
-    start->next = start;
-    start->prev = start;
-
-    // Then, initialize the pointers.
-    _Node *current = rhs.start->next;
-    _Node *newNode = nullptr;
-    _Node *prevNode = start;
-
-    // Iterate through the nodes and update accordingly.
-    while (current != rhs.start) {
-        newNode = new _Node{current->data, prevNode, nullptr};
-        prevNode->next = newNode;
-        current = current->next;    
-        prevNode = newNode;
-    }
-
-    // Update last new node pointer to new start node and new start.
-    newNode->next = start;
-    newNode->prev = start->prev; 
-    start->prev = newNode;
-
-    count = rhs.count;
+    
 
     return *this;
 }
 
+/* Overloads == operator to check if two DataLoops are the same, returns bool. */
 bool DataLoop::operator==(const DataLoop & rhs) const {
     // If the node count is not equal, the objects aren't equal, return false. 
     if (count != rhs.count) {
@@ -199,7 +165,7 @@ DataLoop DataLoop::operator+(const DataLoop & rhs) const {
 
 }
 
-// Overload the ^ operator to shift the list by the offset.
+/* Overload the ^ operator to shift the list by the offset. */
 DataLoop & DataLoop::operator^(int offset) {
     // Return the object when count is zero or one, indicating no change.
     if (count <= 1) {
@@ -227,33 +193,39 @@ DataLoop & DataLoop::operator^(int offset) {
 
 }
 
+/* Inserts a DataLoop object into the current DataLoop object at specified position. */
 DataLoop& DataLoop::splice(DataLoop& rhs, size_t pos) {
+    // If rhs count = zero, return current object.
     if (rhs.count == 0) {
         return *this;
     }
 
+    // Adjust pos if it is greater than count.
     if (pos >= count) {
         pos %= count;
     }
 
+    // Case where insertion is at the beginning of the list.
     if (pos == 0) {
-        start->prev->next = rhs.start;
-        rhs.start->prev->next = start;
-        DataLoop::_Node* temp = start->prev;
-        start->prev = rhs.start->prev;
+        start->prev->next = rhs.start; // Set last node's next pointer to first node of rhs.
+        rhs.start->prev->next = start; // Set last node of rhs to first node of object.
+        DataLoop::_Node* temp = start->prev; // Swaps the prev pointers.
+        start->prev = rhs.start->prev; 
         rhs.start->prev = temp;
         start = rhs.start;
-    } else {
-        DataLoop::_Node* current = start;
-        for (size_t i = 1; i < pos; ++i) {
+    // Case where splice operation is not at the beginning of the list.
+    } else { 
+        DataLoop::_Node* current = start; // Set current to start and iterate until pos. 
+        for (size_t i = 1; i < pos; ++i) { 
             current = current->next;
         }
-        rhs.start->prev->next = current->next;
+        rhs.start->prev->next = current->next; // Set next and prev pointers of nodes.
         current->next->prev = rhs.start->prev;
-        rhs.start->prev = current;
+        rhs.start->prev = current; 
         current->next = rhs.start;
     }
 
+    // Update count, reset rhs, and return current object.
     count += rhs.count;
     rhs.start = nullptr;
     rhs.count = 0;
