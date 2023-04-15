@@ -19,6 +19,8 @@ DataLoop::DataLoop(const int &num) : count(1) {
 DataLoop::DataLoop(const DataLoop & rhs) {
     // If object is empty, create empty DataLoop object and simply return. */
     if (rhs.count == 0) {
+        start = nullptr;
+        count = 0;
         return;
     }
 
@@ -32,12 +34,16 @@ DataLoop::DataLoop(const DataLoop & rhs) {
     _Node *newNode = nullptr;
     _Node *prevNode = start;
 
+    count = 1;
+
     // Iterate through the nodes and update accordingly 
     while (current != rhs.start) {
-        newNode = new _Node{current->data, prevNode, nullptr};
+        newNode = new _Node{current->data, nullptr, prevNode};
+        newNode->prev = prevNode;
         prevNode->next = newNode;
-        current = current->next;
         prevNode = newNode;
+        current = current->next;
+        count += 1;
     }
 
     /* Update for the last new node's pointer to new start node and new start 
@@ -45,7 +51,7 @@ DataLoop::DataLoop(const DataLoop & rhs) {
     prevNode->next = start;
     start->prev = prevNode;
 
-}
+} 
 
 /* Create the destructor which will deallocate dynamically allocatd memory by deletion. */
 DataLoop::~DataLoop() {
@@ -222,6 +228,9 @@ DataLoop & DataLoop::splice(DataLoop & rhs, size_t pos) {
         rhs.count = 0;
         return *this;
     }
+
+
+    return *this;
 }   
 
 
