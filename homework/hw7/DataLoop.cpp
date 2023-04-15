@@ -212,10 +212,26 @@ DataLoop & DataLoop::operator^(int offset) {
 }
 
 DataLoop & DataLoop::splice(DataLoop & rhs, size_t pos) {
-    
+    if (rhs.count == 0) {
+        return *this;
+    }
+
+    if (count == 0) {
+        *this = rhs;
+        rhs.start = nullptr;
+        rhs.count = 0;
+        return *this;
+    }
 }   
 
 
 std::ostream & operator<<(std::ostream & os, const DataLoop & dl) {
+    if (dl.count == 0) {
+        os << "no values";
+    } else {
+        os << "-> " << dl.start->data;
 
+        os << " <-";
+    }
+    
 }
