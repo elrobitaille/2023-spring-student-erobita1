@@ -1,0 +1,85 @@
+Edgar Robitaille
+erobita1 
+
+Overview: 
+
+This is a program that implements a DataLoop class and templated TDataLoop class. The DataLoop class creates a circular doubly linked list which will hold integers, 
+while the TDataLoop class is templated and thereby allows any data type. Both classes have essentially the same functionality, but the TDataLoop is more of a generalized
+version of the DataLoop class. 
+
+The structure of the program is simple. All functions that were declared in DataLoop.h were defined in the DataLoop.cpp file. The functions were catered specifically to 
+what was asked for in the instructions. No helper functions were added as they didn't seem to be needed and the DataLoop.h header file already had the function declarations 
+predefined. TDataLoop is essentially the same thing as DataLoop, except it was templated to take any data type rather than simply just integers. This was done through using a 
+template, which is formatted as follows to allow for any data type to be passed:
+template <typename DataType>
+For files TDataLoop.h, essentially the DataLoop.h file was taken and modified to include this template to allow any data types to be passed through the already existing functions, 
+this made it much easier for me to implement the TDataLoop class. For the testing files, all the provided tests were of course kept but many integer based tests were added to 
+the DataLoop class. These tests were also included in the TDataLoop class but also included some tests for the templated data types like char, string, and float. 
+Overall, the program is functional and there are no valgrind errors or memory leaks. 
+
+
+Function details: 
+
+The main functions are as follows (Note that special functions are more deeply described): 
+
+Default Constructor:
+Creates an empty dataloop circular doubly linked list, and sets the pointers to zero
+and null. 
+
+Non-Default Constructor:
+Creates an empty DataLoop object with a null pointer and zero count. If the input is positive, then the new 
+node is created with that input, and the pointers to next and previous nodes are set to itself, making it a "circular" doubly linked list. If that input is zero or negative, it auto-sets the pointer 
+to null and count to zero, this was a major edge case that I had to consider when writing the test assertions. 
+
+Copy Constructor:
+Creates a copy of the existing DataLoop object, as long as the input is valid. It first checks that the object is empty, and then creates an empty DataLoop object then returns.
+If it isn't empty, then it creates a new node with null pointers and sets start node's next & prev pointer to itself. Finally, it iterates through nodes of the original object, creating new nodes
+while updating them. Connects the last new node's pointers to complete the doubly linked list.
+
+Destructor:
+Responsible for deallocation of the dynamically allocated memory for the objects. First checks if the node count is greater than zero, then iterates through the nodes and deletes them, freeing the memory.
+
+Operator = :
+Overloads the = operator to assign a DataLoop object to another DataLoop object. Checks for self-assignment, clears current DataLoop, but if there are nodes then it will iterate through and add to the current
+DataLoop object with the += operator. 
+
+Operator == :
+Overloads the == operator to compare DataLoop objects and returns a boolean. First it looks at the count, and returns true or false based on that. If count is same, then it checks the data to see if they are all the 
+same. If all the data is same and count is same, return true, else, return false indicating they aren't the same. 
+
+Operator += :
+Overloads the += operator to add a new node to the end of list. It creates a new node containing null pointers and sets next/prev pointers accordingly. If list is empty, then it sets the start pointer to the new node, 
+and next/prev are set to itself. Else, new node is inserted at end of the list by updating prev/next, then finally the count of the list is incremented and modified DataLoop object is returned. 
+
+Operator + :
+Overloads the + operator to add two DataLoop objects together. Creates copy of current object, then returns any object with count of zero. If both are count zero, then it creates a new node and loops through, adding data
+to the new node. New node is returned. 
+
+Operator ^ :
+Overloads the ^ operator to shift the DataLoop by given offset value. Checks if the count is zero or one, showing no change, then outputs it. If offset is negative, it is changed to be positive, and the function determines if 
+it is easier to go forward or backward through the list... and based on this offset it iterates through and updates the start pointer, which will shift the list. Then it finally returns this changed object. 
+
+Splice : 
+Inserts a DataLoop object into the current DataLoop object at a given position. Checks if the object inserted has a count zero, and returns if so. If the position is greater than or equal to current object count, 
+it adjusts the position using the modulus operator to go around the list. Next it handles the cases when the insertion is at the beginning of the list, in which it updates the next and prev pointers and swaps prev pointers of first
+nodes of each object, then sets the start of the current object to start of the inserted object. Second case is for not at the beginning of a list, it iterates until it reaches insertion position, and updates prev/next, then updates the
+prev and next of the inserted object. Finally, it updates count through adding the inserted object count, returns current object after resetting the inserted. 
+
+Operator << :
+Overloads the << operator to print a DataLoop object to the ostream. If count is zero it outputs >no values<. Else, it prints the data starting with -> and first data point, then it iterates through the nodes and prints with <--> in between.
+Lastly, it prints <- at the end, then returns the ostream object. 
+ 
+Note that these functions are essentially the same in TDataLoop, other than the templated aspect rather than simply just integer inputs.
+
+To run the program: 
+
+make all (Runs all the following):
+   - DataLoopTest (Builds executable for DataLoop Integer Version)
+   - TDataLoopTest (Builds executable for TDataLoop Template Version)
+   - test (Runs the test programs)
+
+To test the functions:
+    - make test 
+
+To clean:
+    - make clean
