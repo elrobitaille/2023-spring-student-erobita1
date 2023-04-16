@@ -9,10 +9,16 @@ DataLoop::DataLoop() : start(nullptr), count(0) {}
 
 /* Create the non-default constructor which takes integer input and one element data loop. */
 DataLoop::DataLoop(const int &num) : count(1) {
+    // For zero and negative numbers, create empty DataLoop object.
+    if (num <= 0) {
+        start = nullptr;
+        count = 0;
     // Create a new Node with null pointers and set them accordingly.
-    start = new _Node({num, nullptr, nullptr});
-    start->next = start;
-    start->prev = start;
+    } else {
+        start = new _Node({num, nullptr, nullptr});
+        start->next = start;
+        start->prev = start;
+    }
 }
 
 /* Create the copy constructor */
@@ -50,7 +56,6 @@ DataLoop::DataLoop(const DataLoop & rhs) {
        prev pointer to last new node, which will complete the 'circular' list. */  
     prevNode->next = start;
     start->prev = prevNode;
-
 } 
 
 /* Create the destructor which will deallocate dynamically allocatd memory by deletion. */
@@ -121,7 +126,6 @@ bool DataLoop::operator==(const DataLoop & rhs) const {
     }
 
     return true; // All nodes are equal, return true. 
-
 }
 
 /* Overloads the += operator to add a new node to the end of the list. */
@@ -166,9 +170,7 @@ DataLoop DataLoop::operator+(const DataLoop & rhs) const {
         current_copy += current->data;
         current = current->next;
     }
-
     return current_copy; // Return new DataLoop object.
-
 }
 
 /* Overload the ^ operator to shift the list by the offset. */
@@ -181,6 +183,7 @@ DataLoop & DataLoop::operator^(int offset) {
     // If offset is negative, make it positive.
     // Determines if it is faster to go forward or backward through the list.
     int direction = 1;
+    // Convert to size_t to avoid a type error. 
     size_t offset_size_t = static_cast<size_t>(offset);
     if (offset_size_t > count / 2) {
         direction = -1;
@@ -195,9 +198,7 @@ DataLoop & DataLoop::operator^(int offset) {
             start = start->prev;
         }
     }
-
     return *this; // Return the object. 
-
 }
 
 /* Inserts a DataLoop object into the current DataLoop object at specified position. */
@@ -255,7 +256,5 @@ std::ostream & operator<<(std::ostream & os, const DataLoop & dl) {
         }
         os << "<-"; // Print last arrow <- .
     }
-
     return os; // Return ostream object.
-    
 }
