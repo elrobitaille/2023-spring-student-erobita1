@@ -77,6 +77,19 @@ struct DataLoopTest {
     ASSERT(q->start->data == 10);
     ASSERT(q->count == 1);
     delete q;
+
+    // Check zero case
+    DataLoop *q1 = new DataLoop(0);
+    ASSERT(q1->start == nullptr);
+    ASSERT(q1->count == 0);
+    delete q1;
+
+    // Check negative case
+    DataLoop *q2 = new DataLoop(-10);
+    ASSERT(q2->start == nullptr);
+    ASSERT(q2->count == 0);
+    delete q2;
+
   }
   
   /**
@@ -167,7 +180,16 @@ struct DataLoopTest {
 
     delete r;
     delete q;
-  }
+
+    DataLoop *r1 = new DataLoop();
+    DataLoop *q1 = new DataLoop(*r1);
+    ASSERT(q1->count == 0);
+    ASSERT(q1->start == nullptr);
+
+    delete r1;
+    delete q1;
+
+  } 
   
   /**
    * \brief A test function for assignment operator
@@ -196,8 +218,43 @@ struct DataLoopTest {
     // check that updating r doesn't affect q
     // TODO: add your own tests here
 
+    *r += 40;
+    ASSERT(r->count == 4);
+    ASSERT(q->count == 3);
+    ASSERT(q->start->next->next->next == q->start);
+
+    *r += 50;
+    ASSERT(r->count == 5);
+    ASSERT(q->count == 3);
+    ASSERT(q->start->next->next->next == q->start);
+    ASSERT(q->start->prev->data == 20);
+    ASSERT(q->start->next->next->data == 20);
+
     delete r;
     delete q;
+
+    // test with empty dataloop
+    DataLoop *s = new DataLoop();
+    DataLoop *t = new DataLoop(5);
+    *t = *s;
+    ASSERT(t->count == 0);
+    ASSERT(t->start == nullptr);
+
+    delete s;
+    delete t;
+
+    // Non-empty to empty dataloop assignment
+    DataLoop *u = new DataLoop(10);
+    DataLoop *v = new DataLoop();
+    *v = *u;
+    ASSERT(v->count == 1);
+    ASSERT(v->start->data == 10);
+    ASSERT(v->start->next == v->start);
+    ASSERT(v->start->prev == v->start);
+
+    delete u;
+    delete v;
+
   }
   
   
@@ -225,6 +282,73 @@ struct DataLoopTest {
     
     delete r;
     delete q;
+
+    // Empty comparison
+    DataLoop *s = new DataLoop();
+    DataLoop *t = new DataLoop();
+    ASSERT(*s == *t);
+    s->start = nullptr;
+    t->start = nullptr;
+    ASSERT(*s == *t);
+
+    delete s;
+    delete t;
+
+    // Different size comparison
+    DataLoop *u = new DataLoop();
+    DataLoop *v = new DataLoop();
+
+    *u += 10;
+    *u += 20;
+    *v += 10;
+    *v += 20;
+    *v += 30;
+
+    ASSERT(u->count != v->count);
+
+    delete u;
+    delete v;
+
+    DataLoop *a = new DataLoop();
+    *a += 10; *a += 20; *a += 30;
+
+    DataLoop *b = new DataLoop();
+    *b += 20; *b += 30; *b += 10;
+
+    ASSERT(!(*a == *b));
+
+    delete a;
+    delete b;
+
+    // Same elements different size
+    DataLoop *c = new DataLoop();
+    *c += 10; *c += 20; *c += 30;
+
+    DataLoop *d = new DataLoop();
+    *d += 10; *d += 20; *d += 30; *d += 40;
+
+    ASSERT(!(*c == *d));
+
+    *c += 40;
+
+    ASSERT(*c == *d);
+
+    delete c;
+    delete d;
+
+    // Same element different start position
+    DataLoop *e = new DataLoop();
+    *e += 10; *e += 20; *e += 30;
+
+    DataLoop *f = new DataLoop();
+    *f += 20; *f += 30; *f += 10;
+
+    e->start = e->start->next->next;
+
+    ASSERT(!(*e == *f));
+
+    delete e;
+    delete f;
   }
   
   /**
@@ -251,12 +375,74 @@ struct DataLoopTest {
     ASSERT(s->start->next->next->next->next == s->start);
 
     // TODO: add prev tests
+    ASSERT(s->start->prev != nullptr);
+    ASSERT(s->start->prev->data == 5);
+    ASSERT(s->start->next->next->prev != nullptr);
+    ASSERT(s->start->next->next->prev->data == 30);
 
     // TODO: test that q and r have not changed
+    ASSERT(q->count == 2);
+    ASSERT(q->start->next->data == 30);
+    ASSERT(r->count == 2);
+    ASSERT(r->start->next->data == 5);
 
     delete s;
     delete r;
     delete q;
+
+    // Test with empty dataloop
+    DataLoop *a = new DataLoop();
+    DataLoop *b = new DataLoop();
+    DataLoop *c = new DataLoop();
+    *c = *a + *b;
+    ASSERT(c->count == 0);
+    delete a;
+    delete b;
+    delete c;
+
+    // Test with non-empty and empty dataloop
+    DataLoop *d = new DataLoop(10);
+    DataLoop *e = new DataLoop();
+    DataLoop *f = new DataLoop();
+    *f = *d + *e;
+    ASSERT(f->count == 1);
+    ASSERT(f->start->data == 10);
+    delete d;
+    delete e;
+    delete f;
+
+    // Test for not empty dataloops with different sizes
+    DataLoop *g = new DataLoop(10);
+    *g += 30;
+    DataLoop *h = new DataLoop(15);
+    *h += 5;
+    DataLoop *i = new DataLoop();
+    *i = *g + *h;
+    ASSERT(i->count == 4);
+    ASSERT(i->start->data == 10);
+    ASSERT(i->start->next->data == 30);
+    ASSERT(i->start->next->next->data == 15);
+    ASSERT(i->start->next->next->next->data == 5);
+    delete i;
+    delete h;
+    delete g;
+
+    // Test for not empty dataloops with same sizes
+    DataLoop *j = new DataLoop();
+    *j += 10; *j += 20;
+    DataLoop *k = new DataLoop();
+    *k += 5; *k += 15;
+    DataLoop *l = new DataLoop();
+    *l = *j + *k;
+    ASSERT(l->count == 4);
+    ASSERT(l->start->data == 10);
+    ASSERT(l->start->next->data == 20);
+    ASSERT(l->start->next->next->data == 5);
+    ASSERT(l->start->next->next->next->data == 15);
+    delete l;
+    delete k;
+    delete j;
+
   }
   
   /**
@@ -371,16 +557,16 @@ int main(int, char* argv[]) {
   DataLoopTest::OperatorPlusGetsTest();    // needed for below tests
 
   DataLoopTest::CopyConstructorTest();
-  //DataLoopTest::OperatorAssignmentTest();
+  DataLoopTest::OperatorAssignmentTest();
   DataLoopTest::OperatorEqualityTest();
   DataLoopTest::OperatorConcatenateTest();
   DataLoopTest::OperatorStreamInsertionTest();
 
   DataLoopTest::OperatorShiftTest();
   DataLoopTest::FunctionLengthTest();
-  //DataLoopTest::FunctionSpliceTest(); 
+  DataLoopTest::FunctionSpliceTest(); 
 
-  std::cout << "Reached end of tests!" << std::endl;
+  cout << "Reached end of tests!" <<  endl;
   
   return 0;
 }
