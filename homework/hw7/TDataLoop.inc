@@ -5,11 +5,15 @@ template <typename DataType>
 TDataLoop<DataType>::TDataLoop() : start(nullptr), count(0) {}
 
 template <typename DataType>
-TDataLoop<DataType>::TDataLoop(const DataType & data) {
-    start = new _Node{data, nullptr, nullptr};
-    start->next = start;
-    start->prev = start;
-    count = 1;
+TDataLoop<DataType>::TDataLoop(const DataType &data) : count(1) {
+    if (data <= 0) {
+        start = nullptr;
+        count = 0;
+    } else {
+        start = new _Node({data, nullptr, nullptr});
+        start->next = start;
+        start->prev = start;
+    }
 }
 
 template <typename DataType>
