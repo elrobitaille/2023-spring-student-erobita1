@@ -4,7 +4,7 @@
 #include <string>
 
 using std::cout;
-using std::endl;
+using std::endl;  
 using std::string;
 
 #ifndef ASSERT
@@ -98,7 +98,20 @@ struct TDataLoopTest {
     ASSERT(s->start->data == "10");
     ASSERT(s->count == 1);
     delete s;
-}
+    
+    // Negative case 
+    CTDataLoop *q_negative = new CTDataLoop(-1);
+    ASSERT(q_negative->start == nullptr);
+    ASSERT(q_negative->count == 0);
+    delete q_negative;
+
+    // Empty case 
+    STDataLoop *s_empty = new STDataLoop("");
+    ASSERT(s_empty->start == nullptr);
+    ASSERT(s_empty->count == 0);
+    delete s_empty;
+    
+  }
   
   /**
    * \brief A test function for operator+= using char
@@ -152,9 +165,34 @@ struct TDataLoopTest {
 
     delete q;
     delete r;
+
+    TDataLoop<int> *e = new TDataLoop<int>();
+    ASSERT(e->count == 0);
+    ASSERT(e->start == nullptr);
+
+    *e += 5;
+    ASSERT(e->count == 1);
+    ASSERT(e->start != nullptr);
+    ASSERT(e->start->data == 5);
+    ASSERT(e->start->next == e->start);
+    ASSERT(e->start->prev == e->start);
+
+    delete e;
+
+    CTDataLoop *a = new CTDataLoop();
+
+    *a += '1';
+    *a += '1';
+    ASSERT(a->count == 2);
+    ASSERT(a->start->next->next == a->start);
+    ASSERT(a->start->prev->prev == a->start);
+    ASSERT(a->start->next->data == '1');
+
+    delete a;
+    
   }
 
-    /**
+  /**
    * \brief A test function for operator+= using string
    */
   static void OperatorPlusGetsTestString() {
@@ -206,8 +244,44 @@ struct TDataLoopTest {
 
     delete q;
     delete r;
-  }
 
+    TDataLoop<int> *i = new TDataLoop<int>();
+    *i += 7;
+    ASSERT(i->start->data == 7);
+
+    TDataLoop<float> *f = new TDataLoop<float>();
+    *f += 3.14;
+    ASSERT(std::abs(f->start->data - 3.14) < 1e-6); //tolerance value for floats
+
+    TDataLoop<std::string> *s = new TDataLoop<std::string>();
+    *s += "hello";
+    ASSERT(s->start->data == "hello");
+
+    delete i;
+    delete f;
+    delete s;
+
+    // Empty case 
+    STDataLoop *s_empty = new STDataLoop();
+    *s_empty += "";
+    ASSERT(s_empty->count == 1);
+    ASSERT(s_empty->start != nullptr);
+    ASSERT(s_empty->start->data == "");
+    ASSERT(s_empty->start->next == s_empty->start);
+    ASSERT(s_empty->start->prev == s_empty->start);
+    delete s_empty;
+
+    // Special case characters
+    STDataLoop *s_special = new STDataLoop();
+    *s_special += "#$%^&*";
+    ASSERT(s_special->count == 1);
+    ASSERT(s_special->start != nullptr);
+    ASSERT(s_special->start->data == "#$%^&*");
+    ASSERT(s_special->start->next == s_special->start);
+    ASSERT(s_special->start->prev == s_special->start);
+    delete s_special;
+
+  }
 
   /**
    * \brief A test function for copy constructor using char
@@ -242,6 +316,26 @@ struct TDataLoopTest {
 
     delete r;
     delete q;
+
+    // Empty case
+    CTDataLoop *empty_loop = new CTDataLoop();
+    CTDataLoop *empty_copy = new CTDataLoop(*empty_loop);
+    ASSERT(empty_copy->count == 0);
+    ASSERT(empty_copy->start == nullptr);
+    delete empty_loop;
+    delete empty_copy;
+
+    // One element case
+    CTDataLoop *single_loop = new CTDataLoop('1');
+    CTDataLoop *single_copy = new CTDataLoop(*single_loop);
+    ASSERT(single_copy->count == 1);
+    ASSERT(single_copy->start != nullptr);
+    ASSERT(single_copy->start->data == '1');
+    ASSERT(single_copy->start->next == single_copy->start);
+    ASSERT(single_copy->start->prev == single_copy->start);
+    delete single_loop;
+    delete single_copy;
+
   }
   
   /**
@@ -270,6 +364,10 @@ struct TDataLoopTest {
 
     // check that updating r doesn't affect q
     // TODO: add your own tests here
+
+    r->start->next->data = "99";
+    ASSERT(r->start->next->data == "99");
+    ASSERT(q->start->next->data == "30");
 
     delete r;
     delete q;
@@ -300,6 +398,17 @@ struct TDataLoopTest {
     
     delete r;
     delete q;
+    
+    // Empty cases 
+    CTDataLoop *empty = new CTDataLoop();
+    CTDataLoop *not_empty = new CTDataLoop();
+    *not_empty += '1';
+    ASSERT(!(*empty == *not_empty));
+
+    CTDataLoop *empty1 = new CTDataLoop();
+    CTDataLoop *empty2 = new CTDataLoop();
+    ASSERT(*empty1 == *empty2);
+
   }
   
   /**
@@ -326,12 +435,39 @@ struct TDataLoopTest {
     ASSERT(s->start->next->next->next->next == s->start);
 
     // TODO: add prev tests
+    ASSERT(s->start->next->prev == s->start);
+    ASSERT(s->start->next->next->prev == s->start->next);
+    ASSERT(s->start->next->next->next->prev == s->start->next->next);
 
     // TODO: test that q and r have not changed
+    ASSERT(q->count == 2);
+    ASSERT(q->start->data == "10");
+    ASSERT(q->start->next->data == "30");
+    ASSERT(r->count == 2);
+    ASSERT(r->start->data == "15");
+    ASSERT(r->start->next->data == "5");
 
     delete s;
     delete r;
     delete q;
+
+    // Empty cases concatentation
+    STDataLoop *empty1 = new STDataLoop();
+    STDataLoop *empty2 = new STDataLoop();
+    STDataLoop *result1 = new STDataLoop();
+    *result1 = *empty1 + *empty2;
+    ASSERT(result1->count == 0);
+    ASSERT(result1->start == nullptr);
+
+    // Empty with non-empty cases
+    STDataLoop *empty = new STDataLoop();
+    STDataLoop *not_empty = new STDataLoop("10");
+    *not_empty += "20";
+    STDataLoop *result2 = new STDataLoop();
+    *result2 = *empty + *not_empty;
+    ASSERT(result2->count == 2);
+    ASSERT(result2->start->data == "10");
+    ASSERT(result2->start->next->data == "20");
   }
   
   /**
@@ -347,6 +483,13 @@ struct TDataLoopTest {
     ss << *q;
     ASSERT(ss.str() == "-> A <--> B <--> C <-");
     delete q;
+
+    // single case
+    CTDataLoop *single = new CTDataLoop('X');
+    std::stringstream single_ss;
+    single_ss << *single;
+    ASSERT(single_ss.str() == "-> X <-");
+
   }
 
   /**
@@ -362,6 +505,12 @@ struct TDataLoopTest {
     ss << *q;
     ASSERT(ss.str() == "-> 10 <--> 30 <--> 20 <-");
     delete q;
+
+    // single case again
+    STDataLoop *single = new STDataLoop("X");
+    std::stringstream single_ss;
+    single_ss << *single;
+    ASSERT(single_ss.str() == "-> X <-");
   }
 
   /**
@@ -388,6 +537,19 @@ struct TDataLoopTest {
     ASSERT(q->start->data == 'I');
     
     delete q;
+
+    // empty case
+    CTDataLoop *empty = new CTDataLoop();
+    *empty ^ 5;
+    ASSERT(empty->start == nullptr); 
+
+    // single case 
+    CTDataLoop *single = new CTDataLoop('X');
+    *single ^ 3;
+    ASSERT(single->start->data == 'X');
+    *single ^ -2;
+    ASSERT(single->start->data == 'X');   
+
   }
 
   /**
@@ -471,6 +633,8 @@ int main(int, char* argv[]) {
   TDataLoopTest::OperatorShiftTest();  // char
   TDataLoopTest::FunctionLengthTest();  // string
   TDataLoopTest::FunctionSpliceTest();   // int
+
+  cout << "Reached end of tests!" << endl;
   
   return 0;
 }
