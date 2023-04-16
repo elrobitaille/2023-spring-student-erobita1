@@ -1,7 +1,7 @@
 // Edgar Robitaille
 // erobita1
-#ifndef TDATALOOP_H
-#define TDATALOOP_H
+#ifndef __TDATALOOP_H__
+#define __TDATALOOP_H__
 
 #include <iostream>
 
@@ -138,7 +138,8 @@ public:
     *
     * \return A reference to the output stream object
     */
-    friend std::ostream & operator<<(std::ostream & os, const TDataLoop<DataType> & dl);
+    template <typename T>
+    friend std::ostream & operator<<(std::ostream & os, const TDataLoop<T> & dl);
 
 private:
   // friend TDataLoopTest struct to allow the test struct access to the private data
