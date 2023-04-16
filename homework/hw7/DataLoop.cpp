@@ -86,7 +86,13 @@ DataLoop & DataLoop::operator=(const DataLoop & rhs) {
         count--;
     }
     
-    
+    if (rhs.start != nullptr) {
+        _Node *current = rhs.start;
+        for (size_t i = 0; i < rhs.count; ++i) {
+          *this += current->data;
+          current = current->next;
+        }
+    }
 
     return *this;
 }
@@ -175,11 +181,12 @@ DataLoop & DataLoop::operator^(int offset) {
     // If offset is negative, make it positive.
     // Determines if it is faster to go forward or backward through the list.
     int direction = 1;
-    if (offset > count / 2) {
+    size_t offset_size_t = static_cast<size_t>(offset);
+    if (offset_size_t > count / 2) {
         direction = -1;
         offset = count - offset;
     }
-
+ 
     // Iterates through list and updates the start's pointer based on the direction.
     for (int i = 0; i < offset; ++i) {
         if (direction == 1) {
