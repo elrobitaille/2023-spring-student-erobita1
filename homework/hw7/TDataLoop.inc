@@ -1,8 +1,5 @@
 // Edgar Robitaille
 // erobita1
-#include <iostream>
-
-#include "TDataLoop.h"
 
 /* Create the default constructor with null pointer and zero count. */
 template <typename DataType>
