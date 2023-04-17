@@ -20,6 +20,7 @@ and null.
 
 Non-Default Constructor:
 Creates an empty DataLoop object with a null pointer and zero count. If the input is positive, then the new node is created with that input, and the pointers to next and previous nodes are set to itself, making it a "circular" doubly linked list. If that input is zero or negative, it auto-sets the pointer to null and count to zero, this was a major edge case that I had to consider when writing the test assertions. 
+There is one major difference between the DataLoop and TDataLoop classes, the way that negative numbers and zero are handled. In the DataLoop class, if the input is negative or zero, it will automatically set the pointer to null and count to zero. In the TDataLoop class, if the input is negative or zero, it will be allowed because this is a template class which should accept any form of data/datatype, while the DataLoop class is specifically for positive integers.
 
 Copy Constructor:
 Creates a copy of the existing DataLoop object, as long as the input is valid. It first checks that the object is empty, and then creates an empty DataLoop object then returns. If it isn't empty, then it creates a new node with null pointers and sets start node's next & prev pointer to itself. Finally, it iterates through nodes of the original object, creating new nodes while updating them. Connects the last new node's pointers to complete the doubly linked list.
