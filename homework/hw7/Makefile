@@ -6,7 +6,7 @@ DEBUGGING_FLAGS = -g -O0
 CFLAGS = $(CONSERVATIVE_FLAGS) $(DEBUGGING_FLAGS)
 
 # Builds all executables
-all: DataLoopTest TDataLoopTest
+all: DataLoopTest TDataLoopTest test
 
 # Build the executable DataLoopTest
 DataLoopTest: DataLoopTest.o DataLoop.o

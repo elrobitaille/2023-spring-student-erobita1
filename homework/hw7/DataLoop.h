@@ -8,6 +8,7 @@
  * \defgroup DataLoop
  * \brief An integer dataloop
  */
+
 class DataLoop {
 public:
   /**

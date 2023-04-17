@@ -21,7 +21,7 @@ DataLoop::DataLoop(const int &num) : count(1) {
     }
 }
 
-/* Create the copy constructor */
+/* Create the copy constructor. */
 DataLoop::DataLoop(const DataLoop & rhs) {
     // If object is empty, create empty DataLoop object and simply return. */
     if (rhs.count == 0) {
@@ -58,7 +58,7 @@ DataLoop::DataLoop(const DataLoop & rhs) {
     start->prev = prevNode;
 } 
 
-/* Create the destructor which will deallocate dynamically allocatd memory by deletion. */
+/* Create the destructor which will deallocate dynamically allocated memory by deletion. */
 DataLoop::~DataLoop() {
     // First make sure count is greater than zero, then iterate through and deallocate nodes.
     if (count > 0) {
