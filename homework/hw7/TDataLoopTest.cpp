@@ -101,16 +101,22 @@ struct TDataLoopTest {
     
     // Negative case 
     CTDataLoop *q_negative = new CTDataLoop(-1);
-    ASSERT(q_negative->start == nullptr);
-    ASSERT(q_negative->count == 0);
-    delete q_negative;
+    ASSERT(q_negative->start != nullptr);
+    ASSERT(q_negative->start->next == q_negative->start);
+    ASSERT(q_negative->start->prev == q_negative->start);
+    ASSERT(q_negative->start->data == -1);
+    ASSERT(q_negative->count == 1);
+    delete q_negative;    
 
     // Empty case 
-    STDataLoop *s_empty = new STDataLoop("");
-    ASSERT(s_empty->start == nullptr);
-    ASSERT(s_empty->count == 0);
-    delete s_empty;
-    
+    STDataLoop *s_single_char = new STDataLoop("0");
+    ASSERT(s_single_char->start != nullptr);
+    ASSERT(s_single_char->start->next == s_single_char->start);
+    ASSERT(s_single_char->start->prev == s_single_char->start);
+    ASSERT(s_single_char->start->data == "0");
+    ASSERT(s_single_char->count == 1);
+    delete s_single_char;
+
   }
   
   /**
@@ -405,9 +411,15 @@ struct TDataLoopTest {
     *not_empty += '1';
     ASSERT(!(*empty == *not_empty));
 
+    delete empty;
+    delete not_empty;
+
     CTDataLoop *empty1 = new CTDataLoop();
     CTDataLoop *empty2 = new CTDataLoop();
     ASSERT(*empty1 == *empty2);
+
+    delete empty1;
+    delete empty2;
 
   }
   
@@ -468,6 +480,13 @@ struct TDataLoopTest {
     ASSERT(result2->count == 2);
     ASSERT(result2->start->data == "10");
     ASSERT(result2->start->next->data == "20");
+
+    delete result2;
+    delete not_empty;
+    delete empty;
+    delete result1;
+    delete empty1;
+    delete empty2;
   }
   
   /**
@@ -490,6 +509,8 @@ struct TDataLoopTest {
     single_ss << *single;
     ASSERT(single_ss.str() == "-> X <-");
 
+    delete single;
+
   }
 
   /**
@@ -511,6 +532,8 @@ struct TDataLoopTest {
     std::stringstream single_ss;
     single_ss << *single;
     ASSERT(single_ss.str() == "-> X <-");
+
+    delete single;
   }
 
   /**
@@ -542,6 +565,7 @@ struct TDataLoopTest {
     CTDataLoop *empty = new CTDataLoop();
     *empty ^ 5;
     ASSERT(empty->start == nullptr); 
+    delete empty;
 
     // single case 
     CTDataLoop *single = new CTDataLoop('X');
@@ -549,6 +573,8 @@ struct TDataLoopTest {
     ASSERT(single->start->data == 'X');
     *single ^ -2;
     ASSERT(single->start->data == 'X');   
+
+    delete single;
 
   }
 
