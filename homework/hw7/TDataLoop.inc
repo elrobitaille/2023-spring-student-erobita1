@@ -1,21 +1,22 @@
 // Edgar Robitaille
 // erobita1
+#include <iostream>
 
+#include "TDataLoop.h"
+
+/* Create the default constructor with null pointer and zero count. */
 template <typename DataType>
 TDataLoop<DataType>::TDataLoop() : start(nullptr), count(0) {}
 
+/* Create the non-default constructor which takes (template) ANY type input and one element data loop. */
 template <typename DataType>
 TDataLoop<DataType>::TDataLoop(const DataType &data) : count(1) {
-    if (data <= 0) {
-        start = nullptr;
-        count = 0;
-    } else {
-        start = new _Node({data, nullptr, nullptr});
-        start->next = start;
-        start->prev = start;
-    }
+    start = new _Node({data, nullptr, nullptr});
+    start->next = start;
+    start->prev = start;
 }
 
+/* Create the copy constructor. */
 template <typename DataType>
 TDataLoop<DataType>::TDataLoop(const TDataLoop<DataType> & rhs) { 
     // If object is empty, create empty DataLoop object and simply return. */
@@ -53,6 +54,7 @@ TDataLoop<DataType>::TDataLoop(const TDataLoop<DataType> & rhs) {
     start->prev = prevNode; 
 }
 
+/* Overloads the = operator to assign rhs DataLoop to current DataLoop. */
 template <typename DataType>
 TDataLoop<DataType> & TDataLoop<DataType>::operator=(const TDataLoop<DataType> & rhs) {
     // First check if there is self assigment involved. 
@@ -79,6 +81,7 @@ TDataLoop<DataType> & TDataLoop<DataType>::operator=(const TDataLoop<DataType> &
     return *this;
 }
 
+/* Create the destructor which will deallocate dynamically allocated memory by deletion. */
 template <typename DataType>
 TDataLoop<DataType>::~TDataLoop() {
     // First make sure count is greater than zero, then iterate through and deallocate nodes.
@@ -97,6 +100,7 @@ TDataLoop<DataType>::~TDataLoop() {
     }
 }
 
+/* Overloads == operator to check if two DataLoops are the same, returns bool. */
 template <typename DataType>
 bool TDataLoop<DataType>::operator==(const TDataLoop<DataType> & rhs) const { 
     // If the node count is not equal, the objects aren't equal, return false. 
@@ -123,6 +127,7 @@ bool TDataLoop<DataType>::operator==(const TDataLoop<DataType> & rhs) const {
     return true; // All nodes are equal, return true. 
 }
 
+/* Overloads the += operator to add a new node to the end of the list. */
 template <typename DataType>
 TDataLoop<DataType> & TDataLoop<DataType>::operator+=(const DataType & data) {
     // Create a new node with null pointers, then set next and prev pointers if count is zero.
@@ -144,6 +149,7 @@ TDataLoop<DataType> & TDataLoop<DataType>::operator+=(const DataType & data) {
     return *this;
 }
 
+/* Overload the + operator to add DataLoop objects together. */
 template <typename DataType>
 TDataLoop<DataType> TDataLoop<DataType>::operator+(const TDataLoop<DataType> & rhs) const {
     // Create a copy of current object. 
@@ -169,6 +175,7 @@ TDataLoop<DataType> TDataLoop<DataType>::operator+(const TDataLoop<DataType> & r
     return current_copy; // Return new DataLoop object.
 }
 
+/* Overload the ^ operator to shift the list by the offset. */
 template <typename DataType>
 TDataLoop<DataType> & TDataLoop<DataType>::operator^(int offset) {
     // Return the object when count is zero or one, indicating no change.
@@ -199,6 +206,7 @@ TDataLoop<DataType> & TDataLoop<DataType>::operator^(int offset) {
 
 }
 
+/* Inserts a DataLoop object into the current DataLoop object at specified position. */
 template <typename DataType>
 TDataLoop<DataType> & TDataLoop<DataType>::splice(TDataLoop<DataType> & rhs, size_t pos) {
     // If rhs count = zero, return current object.
@@ -238,6 +246,7 @@ TDataLoop<DataType> & TDataLoop<DataType>::splice(TDataLoop<DataType> & rhs, siz
     return *this;
 }
 
+/* Overloads the << operator to print DataLoop object to ostream. */
 template <typename DataType>
 std::ostream & operator<<(std::ostream & os, const TDataLoop<DataType> & dl) {
     // If count is zero, print >no values<.
